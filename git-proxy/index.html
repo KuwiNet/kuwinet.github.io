@@ -5,8 +5,23 @@
 	<meta charset="UTF-8">
 	<link rel="shortcut icon" href="favicon.ico">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="//at.alicdn.com/t/c/font_4892763_8rs3qoz7a95.css">
 	<style>
+		/* 在线链接服务仅供平台体验和调试使用，平台不承诺服务的稳定性，企业客户需下载字体包自行发布使用并做好备份。 */
+		@font-face {
+		  font-family: 'iconfont';  /* Project id 4892763 */
+		  src: url('//at.alicdn.com/t/c/font_4892763_8rs3qoz7a95.woff2?t=1744632378833') format('woff2'),
+		       url('//at.alicdn.com/t/c/font_4892763_8rs3qoz7a95.woff?t=1744632378833') format('woff'),
+		       url('//at.alicdn.com/t/c/font_4892763_8rs3qoz7a95.ttf?t=1744632378833') format('truetype');
+		}
+
+		.iconfont {
+		  font-family: "iconfont" !important;
+		  font-size: 16px;
+		  font-style: normal;
+		  -webkit-font-smoothing: antialiased;
+		  -moz-osx-font-smoothing: grayscale;
+		}
+
 		:root {
 			--primary-color: #1a1e21;
 			--primary-hover: #0d1117;
@@ -215,7 +230,7 @@
 			color: white;
 			cursor: pointer;
 			transition: all 0.2s ease;
-		}
+		 }
 
 		.icon:hover {
 			color: #1E90FF;
@@ -283,10 +298,10 @@
 			<p>生成的链接：<a id="generated-link" href=""></a></p>
 			<div class="icon-container">
 				<div class="icon" onclick="copyLink()" title="复制链接">
-					<i class="icon-fuzhi"></i>
+					<span class="iconfont">&#xe601;</span>
 				</div>
 				<div class="icon" onclick="jumpToLink()" title="跳转">
-					<i class="icon-tiaozhuan"></i>
+					<span class="iconfont">&#xe600;</span>
 				</div>
 			</div>
 		</div>
