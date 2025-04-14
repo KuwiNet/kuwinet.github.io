@@ -6,12 +6,11 @@
 	<link rel="shortcut icon" href="favicon.ico">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<style>
-		/* 在线链接服务仅供平台体验和调试使用，平台不承诺服务的稳定性，企业客户需下载字体包自行发布使用并做好备份。 */
 		@font-face {
 		  font-family: 'iconfont';
-		  src: url('iconfont.woff2?t=1744633376234') format('woff2'),
-		       url('iconfont.woff?t=1744633376234') format('woff'),
-		       url('iconfont.ttf?t=1744633376234') format('truetype');
+		  src: url('iconfont.woff2?t=1744636726297') format('woff2'),
+		       url('iconfont.woff?t=1744636726297') format('woff'),
+		       url('iconfont.ttf?t=1744636726297') format('truetype');
 		}
 
 		.iconfont {
@@ -125,11 +124,18 @@
 			color: white;
 			cursor: pointer;
 			transition: all 0.2s ease;
+			display: flex;
+			justify-content: center;
+			align-items: center;
 		}
 
 		.search-button:hover {
 			background: var(--primary-hover);
 			transform: translateY(-50%) scale(1.05);
+		}
+
+		.search-button .iconfont {
+			font-size: 20px;
 		}
 
 		.tips {
@@ -212,7 +218,7 @@
 		.result a {
 			color: #FFFFFF;
 			text-decoration: none;
-		 }
+		}
 
 		.result a:hover {
 			text-decoration: underline;
@@ -231,7 +237,7 @@
 			color: white;
 			cursor: pointer;
 			transition: all 0.2s ease;
-		}
+		 }
 
 		.icon:hover {
 			color: #1E90FF;
@@ -289,9 +295,7 @@
 				required
 			>
 			<button type="submit" class="search-button">
-				<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-					<path d="M13 5l7 7-7 7M5 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/>
-				</svg>
+				<span class="iconfont">&#xe664;</span>
 			</button>
 		</form>
 
