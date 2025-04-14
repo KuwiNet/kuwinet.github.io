@@ -212,7 +212,7 @@
 		.result a {
 			color: #FFFFFF;
 			text-decoration: none;
-		}
+		 }
 
 		.result a:hover {
 			text-decoration: underline;
@@ -231,7 +231,7 @@
 			color: white;
 			cursor: pointer;
 			transition: all 0.2s ease;
-		 }
+		}
 
 		.icon:hover {
 			color: #1E90FF;
@@ -285,7 +285,7 @@
 				class="search-input"
 				name="q" 
 				placeholder="请输入 GitHub 文件链接"
-				pattern="^((https|http)://)?(github.com/.+?/.+?/(?:releases|archive|blob|raw|suites)|((?:raw|gist).(?:githubusercontent|github).com))/.+$" 
+				pattern="^((https?://)?(github.com/.+?/.+?/(?:releases|archive|blob|raw|suites)|((?:raw|gist).(?:githubusercontent|github).com))/.+$" 
 				required
 			>
 			<button type="submit" class="search-button">
@@ -338,8 +338,13 @@
 		function toSubmit(e) {
 			e.preventDefault();
 			const input = document.getElementsByName('q')[0];
+			let userInput = input.value;
+
+			// 去掉协议头
+			userInput = userInput.replace(/^https?:\/\//, '');
+
 			const baseUrl = location.href.substr(0, location.href.lastIndexOf('/') + 1);
-			const generatedUrl = baseUrl + input.value;
+			const generatedUrl = baseUrl + userInput;
 
 			// 显示生成的链接
 			document.getElementById('generated-link').href = generatedUrl;
