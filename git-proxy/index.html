@@ -218,19 +218,19 @@
 		.result a {
 			color: #FFFFFF;
 			text-decoration: none;
-		}
-
-		.result a:hover {
-			text-decoration: underline;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
 		}
 
 		.button-container {
 			display: flex;
 			flex-direction: column;
 			gap: 10px;
-			justify-content: center;
-			align-items: center;
-			margin-top: 10px;
+			position: absolute;
+			right: 1rem;
+			top: 50%;
+			transform: translateY(-50%);
 		}
 
 		.button {
@@ -311,7 +311,7 @@
 		</form>
 
 		<div id="result" class="result" style="display: none;">
-			<p><br><a id="generated-link" href=""></a></p>
+			<p><a id="generated-link" href=""></a></p>
 			<div class="button-container">
 				<div class="button" onclick="copyLink()" title="复制链接">
 					<span class="iconfont">&#xe60f;</span>
