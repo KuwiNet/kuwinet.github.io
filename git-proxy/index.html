@@ -8,9 +8,9 @@
 	<style>
 		@font-face {
 		  font-family: 'iconfont';
-		  src: url('iconfont.woff2?t=1744636726297') format('woff2'),
-		       url('iconfont.woff?t=1744636726297') format('woff'),
-		       url('iconfont.ttf?t=1744636726297') format('truetype');
+		  src: url('iconfont.woff2?t=1744700749830') format('woff2'),
+		       url('iconfont.woff?t=1744700749830') format('woff'),
+		       url('iconfont.ttf?t=1744700749830') format('truetype');
 		}
 
 		.iconfont {
@@ -23,10 +23,10 @@
 		}
 
 		:root {
-			--primary-color: #1a1e21;
-			--primary-hover: #0d1117;
+			--primary-color: #6e00aa;
+			--primary-hover: #9f00f4;
 			--text-color: #f0f6fc;
-			--bg-gradient: linear-gradient(135deg, #1a1e21 0%, #0d1117 100%);
+			--bg-gradient: linear-gradient(135deg, #8100c2 0%, #46006a 100%);
 			--shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 		}
 
@@ -50,7 +50,7 @@
 		.container {
 			width: 100%;
 			max-width: 800px;
-			padding: 40px 20px;
+			padding: 10px 20px;
 			text-align: center;
 		}
 
@@ -68,7 +68,7 @@
 			font-size: 2.5rem;
 			font-weight: 600;
 			margin-bottom: 1rem;
-			background: linear-gradient(45deg, #cdd5dd, #e2e8f0);
+			background: linear-gradient(45deg, #ffffff, #e2e8f0);
 			-webkit-background-clip: text;
 			-webkit-text-fill-color: transparent;
 		}
@@ -108,7 +108,7 @@
 			border-color: var(--primary-color);
 			background: white;
 			outline: none;
-			box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.2);
+			box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.6);
 		}
 
 		.search-button {
@@ -147,7 +147,7 @@
 		}
 
 		.example-title {
-			color: #9ba1a6;
+			color: #fff;
 			margin-bottom: 1.5rem;
 			font-size: 1rem;
 			font-weight: 700;
@@ -204,18 +204,29 @@
 			}
 
 			.result {
-				padding: 1rem;
-				min-height: 100px;
+				flex-direction: column;
 			}
-
+			
 			.result a {
 				word-break: break-word;
 			}
-
+			
+			.retext {
+				flex-direction: row;
+				justify-content: space-between;
+				align-items: flex-start;
+			}
+			
+			.retext p {
+				width: 100%;
+				margin-right: 0;
+				margin-bottom: 10px;
+				text-align: left;
+			}
+			
 			.button-container {
-				flex-direction: column;
 				position: static;
-				margin-top: 10px;
+				align-self: flex-end;
 			}
 		}
 
@@ -229,6 +240,25 @@
 			border: 1px solid rgba(255, 255, 255, 0.2);
 			position: relative;
 			min-height: 100px;
+			display: flex;
+			flex-direction: column;
+		}
+		
+		.retext {
+			color: #FFFFFF;
+			text-decoration: none;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			width: 100%;
+		}
+		
+		.retext p {
+			flex: 1;
+			max-width: 90%;
+			word-break: break-word;
+			overflow-wrap: break-word;
+			margin-right: 10px;
 		}
 
 		.result a {
@@ -271,16 +301,26 @@
 		.button span.iconfont {
 			font-size: 20px;
 		}
+		
+		.domain-list {
+			list-style-type: none;
+			margin-left: 2rem;
+			padding-left: 0;
+		}
+		
+		.domain-list li {
+			margin-bottom: 0.5rem;
+		}
 
 		.notification {
 			position: fixed;
 			top: 20px;
 			left: 50%;
 			transform: translateX(-50%);
-			background: rgba(0, 102, 255, 0.9);
+			background: rgba(70, 0, 106, 0.9);
 			color: white;
 			padding: 1rem 2rem;
-			border-radius: 8px;
+			border-radius: 15px;
 			z-index: 1000;
 			opacity: 0;
 			transition: opacity 0.3s ease;
@@ -304,8 +344,8 @@
 	<div class="container">
 		<center>
 			<div class="logo">
-				<a href="https://ghx.pp.ua/" target="_blank">
-					<svg xmlns="http://www.w3.org/2000/svg" width="180" height="150" viewBox="0 0 512 512" fill="#ffffff">
+				<a href="https://github.com/KuwiNet/CF-Ghproxy" target="_blank">
+					<svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 512 512" >
 						<image href="logo.svg" />
 					</svg>
 				</a>
@@ -318,7 +358,7 @@
 				type="text" 
 				class="search-input"
 				name="q" 
-				placeholder="请输入 GitHub 文件链接"
+				placeholder="请输入 GitHub 链接"
 				pattern="^((https?://)?(github.com/.+?/.+?/(?:releases|archive|blob|raw|suites)|((?:raw|gist).(?:githubusercontent|github).com))/.+$" 
 				required
 			>
@@ -328,7 +368,9 @@
 		</form>
 
 		<div id="result" class="result" style="display: none;">
-			<p><span id="generated-link" href=""></span></p>
+			<div class="retext">
+				<p><span id="generated-link"></span></p>
+			</div>
 			<div class="button-container">
 				<div class="button" onclick="copyLink()" title="复制链接">
 					<span class="iconfont">&#xe60f;</span>
@@ -340,30 +382,43 @@
 		</div>
 
 		<div class="tips">
-			<p>✨ 支持带协议头(https://)或不带的GitHub链接，更多用法见<a href="https://hunsh.net/archives/23/">文档说明</a></p>
-			<p>🚀 release、archive使用cf加速，文件会跳转至JsDelivr</p>
-			<p>⚠️ 注意：暂不支持文件夹下载</p>
+			<p><span class="iconfont">&#xe763;</span> GitHub 链接输入支持带协议头 ( https:// ) 或不带</p>
+			<p><span class="iconfont">&#xe610;</span> 支持的域名：</p>
+			<ul class="domain-list">
+				<li><span class="iconfont">&#xe6af;</span> github.com &nbsp;&nbsp;<span class="iconfont">&#xe6af;</span> raw.githubusercontent.com</li>
+				<li><span class="iconfont">&#xe6af;</span> gist.githubusercontent.com &nbsp;&nbsp;<span class="iconfont">&#xe6af;</span> api.github.com</li>
+			</ul>
+			<p><span class="iconfont">&#xe67c;</span> Release、Archive 使用 CF 加速，文件会跳转至 JsDelivr</p>
+			<p><span class="iconfont">&#xe610;</span>️ 支持 HTTPS Git Clone 
+			&nbsp;&nbsp;<span class="iconfont">&#xed1a;</span>️ 不支持 SSH Git Clone 
+			&nbsp;&nbsp;<span class="iconfont">&#xed1a;</span>️ 不支持文件夹下载</p>
 		</div>
 
 		<div class="example">
-			<div class="example-title">📃 合法输入示例：</div>
-			<p>📄 分支源码：<a href="https://github.com/hunshcn/project/archive/master.zip">https://github.com/hunshcn/project/archive/master.zip</a></p>
-			<p>📁 release源码：<a href="https://github.com/hunshcn/project/archive/v0.1.0.tar.gz">https://github.com/hunshcn/project/archive/v0.1.0.tar.gz</a></p>
-			<p>📂 release文件：<a href="https://github.com/hunshcn/project/releases/download/v0.1.0/example.zip">https://github.com/hunshcn/project/releases/download/v0.1.0/example.zip</a></p>
-			<p>💾 commit文件：<a href="https://github.com/hunshcn/project/blob/123/filename">https://github.com/hunshcn/project/blob/123/filename</a></p>
-			<p>🖨️ gist：<a href="https://gist.githubusercontent.com/cielpy/123/raw/cmd.py">https://gist.githubusercontent.com/cielpy/123/raw/cmd.py</a></p>
+			<div class="example-title"><span class="iconfont">&#xe72a;</span>️️ 输入示例：</div>
+			<p><span class="iconfont">&#xe655;</span>️️️ 分支源码：https://github.com/user/repo/archive/main.zip</p>
+			<p><span class="iconfont">&#xe616;</span>️️️ 版本发布：https://github.com/user/repo/releases/download/v1.0.0/app.zip</p>
+			<p><span class="iconfont">&#xe600;</span>️️ 原始文件：https://raw.githubusercontent.com/user/repo/main/file.txt</p>
+			<p><span class="iconfont">&#xe6ca;</span>️️ Git克隆：https://github.com/user/project.git</p>
+			<p><span class="iconfont">&#xe617;</span>️️️ Gist文件：https://gist.githubusercontent.com/user/gist_id/raw/file.txt</p>
+			<p><span class="iconfont">&#xe71c;</span>️️ Api：https://api.github.com/repos/fatedier/frp/releases/latest</p>
 		</div>
 
+		<div class="example">
+			<div class="example-title"><span class="iconfont">&#xe824;</span>️️️ 基本使用示例：</div>
+			<p><span class="iconfont">&#xe6ca;</span>️️ Git克隆：git clone https://ghx.pp.ua/github.com/user/project.git</p>
+			<p><span class="iconfont">&#xe618;</span>️️ 文件下载：wget https://ghx.pp.ua/raw.githubusercontent.com/user/repo/main/file.txt</p>
+			<p><span class="iconfont">&#xe616;</span>️️️ 版本发布：curl -LO https://ghx.pp.ua/github.com/user/project/project.sh</p>
+		</div>
+		
 		<p style="position: sticky;top: calc(100% - 2.5em);">
-			由 <a href="https://github.com/Geekertao/CF-Workers-GitHub-Proxy" target="_blank">CF-Workers-GitHub-Proxy</a> 
-			提供技术支持。
-			在 <a href="https://workers.cloudflare.com/" target="_blank">Cloudflare Workers</a> 
-			上运行。
+			<br><br>
+			Support by <a href="https://kuwi.net/" target="_blank">KuWi</a> ,  Run on Cloudflare Workers .
 		</p>
 	</div>
 
 	<div id="notification" class="notification">
-		已复制！
+		
 	</div>
 
 	<script>
@@ -371,38 +426,49 @@
 			e.preventDefault();
 			const input = document.getElementsByName('q')[0];
 			let userInput = input.value;
-
+		
 			// 去掉协议头
 			userInput = userInput.replace(/^https?:\/\//, '');
-
+		
+			// 验证域名
+			const validDomains = ['github.com', 'raw.githubusercontent.com', 'gist.githubusercontent.com', 'api.github.com'];
+			const isValidDomain = validDomains.some(domain => userInput.startsWith(domain));
+		
+			if (!isValidDomain) {
+				showNotification('&#xe6aa;', '&nbsp;请输入 Github 链接');
+				input.value = '';
+				return;
+			}
+		
 			const baseUrl = location.href.substr(0, location.href.lastIndexOf('/') + 1);
 			const generatedUrl = baseUrl + userInput;
-
+		
 			// 显示生成的链接
 			document.getElementById('generated-link').href = generatedUrl;
 			document.getElementById('generated-link').textContent = generatedUrl;
 			document.getElementById('result').style.display = 'block';
-
+		
 			// 清空输入框
 			input.value = '';
 		}
-
+		
 		function copyLink() {
 			const link = document.getElementById('generated-link').href;
 			navigator.clipboard.writeText(link).then(() => {
-				showNotification();
+				showNotification('&#xe63f;', '&nbsp;链接已复制');
 			}, (err) => {
 				console.error('复制失败:', err);
 			});
 		}
-
+		
 		function jumpToLink() {
 			const link = document.getElementById('generated-link').href;
 			window.open(link, '_blank');
 		}
-
-		function showNotification() {
+		
+		function showNotification(iconCode, message) {
 			const notification = document.getElementById('notification');
+			notification.innerHTML = `<span class="iconfont">${iconCode}</span> ${message}`;
 			notification.classList.add('show');
 			setTimeout(() => {
 				notification.classList.remove('show');
