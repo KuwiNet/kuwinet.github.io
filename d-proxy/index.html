@@ -1,509 +1,736 @@
 <!DOCTYPE html>
-	<html>
-	<head>
-		<title>Docker Hub 镜像搜索</title>
-		<meta charset="UTF-8">
-		<link rel="shortcut icon" href="https://kuwinet.github.io/favicon.ico">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/themes/prism.min.css" rel="stylesheet" />
-	    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/prism.min.js"></script>
-	    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-bash.min.js"></script>
-		<style>
-			@font-face {
-			  font-family: 'iconfont';  /* Project id 4892763 */
-			  src: url('//at.alicdn.com/t/c/font_4892763_d4ir0ka4xlu.woff2?t=1744700725694') format('woff2'),
-			       url('//at.alicdn.com/t/c/font_4892763_d4ir0ka4xlu.woff?t=1744700725694') format('woff'),
-			       url('//at.alicdn.com/t/c/font_4892763_d4ir0ka4xlu.ttf?t=1744700725694') format('truetype');
-			}
-			
-			.iconfont {
-				font-family: "iconfont" !important;
-				font-size: 16px;
-				font-style: normal;
-				color: #fff;
-				-webkit-font-smoothing: antialiased;
-				-moz-osx-font-smoothing: grayscale;
-			}
-			
-			:root {
-				--github-color: #f0f6fc;
-				--githubbj-color: #f0f6fc;
-				--text-color: #f0f6fc;
-				--shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-			}
-			
-			* {
-				box-sizing: border-box;
-				margin: 0;
-				padding: 0;
-			}
-			
-			body {
-				font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-				display: flex;
-				flex-direction: column;
-				justify-content: center; 
-				align-items: center;
-				min-height: 100vh;
-				margin: 0;
-				background: linear-gradient(120deg, #1a90ff 0%, #003eb3 100%);
-				color: var(--text-color);
-				padding: 20px;
-			}
-			
-			.container {
-				text-align: center;
-				width: 100%;
-				max-width: 800px;
-				padding: 0 20px;
-				margin: 0 auto; 
-				display: flex; 
-				flex-direction: column; 
-				justify-content: center; 
-				min-height: 70vh; 
-			}
-			
-			.logo {
-				margin-bottom: 2rem;
-				transform: scale(1);
-				transition: transform 0.3s ease;
-			}
-			
-			.logo:hover {
-				transform: scale(1.1);
-			}
-			
-			.title {
-				font-size: 2.5rem;
-				font-weight: 600;
-				margin-bottom: 1rem;
-				background: linear-gradient(45deg, #ffffff, #e2e8f0);
-				-webkit-background-clip: text;
-				-webkit-text-fill-color: transparent;
-			}
-			
-			.tips a {
-				color: #FFFFFF;
-				text-decoration: none;
-				border-bottom: 1px dashed #FFFFFF;
-				transition: all 0.2s ease;
-			}
-			
-			.tips a:hover {
-				color: #FFFFFF;
-				border-bottom-color: #FFFFFF;
-			}
-			
-			.search-container {
-				display: flex;
-				align-items: stretch;
-				width: 100%;
-				max-width: 760px;
-				margin: 0 auto;
-				height: 50px;
-			}
-			#search-input {
-				flex: 1;
-				padding: 15px 20px;
-				font-size: 16px;
-				border: none;
-				border-radius: 8px 0 0 8px;
-				outline: none;
-				box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-				transition: all 0.3s ease;
-			}
-			#search-input {
-				flex: 1;
-				padding: 0 20px;
-				font-size: 16px;
-				border: none;
-				border-radius: 8px 0 0 8px;
-				outline: none;
-				box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-				transition: all 0.3s ease;
-				height: 100%;
-			}
-			#search-button {
-				padding: 0 25px;
-				background-color: #0066ff;
-				border: none;
-				border-radius: 0 8px 8px 0;
-				cursor: pointer;
-				transition: all 0.3s ease;
-				height: 100%;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-			}
-			#search-button:hover {
-				background-color: #0052cc;
-				transform: translateY(-1px);
-			}
-			#search-button svg {
-				width: 24px;
-				height: 24px;
-			}
-			
-			.search-button .iconfont {
-				font-size: 20px;
-			}
-			
-			.tips {
-				margin-top: 2rem;
-				color: rgba(255, 255, 255, 0.8);
-				line-height: 1.6;
-				text-align: left;
-				padding-left: 1.8rem;
-			}
-			
-			.example-title {
-				color: #fff;
-				margin-bottom: 1.5rem;
-				font-size: 1rem;
-				font-weight: 700;
-				position: relative;
-				padding-bottom: 0.8rem;
-				border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-			}
-			
-			.example p {
-				margin: 0.8rem 0;
-				font-family: monospace;
-				font-size: 0.95rem;
-				color: rgba(255, 255, 255, 0.8);
-				padding-left: 1.5rem;
-				line-height: 1.4;
-				word-break: break-all;
-			}
-			
-			.example {
-				margin-top: 2rem;
-				padding: 1.8rem;
-				background: rgba(255, 255, 255, 0.05);
-				border-radius: 12px;
-				text-align: left;
-				border: 1px solid rgba(255, 255, 255, 0.1);
-				overflow-wrap: break-word;
-				word-wrap: break-word;
-			}
-			
-			@media (max-width: 640px) {
-				.container {
-			padding: 0 15px;
-			min-height: 60vh;
-				}
-				.github-corner svg {
-			width: 60px;
-			height: 60px;
-				}
-				.github-corner:hover .octo-arm {
-			animation: none;
-				}
-				.github-corner .octo-arm {
-			animation: octocat-wave 560ms ease-in-out;
-				}
-				.search-container {
-			height: 45px;
-				}
-				
-				#search-input {
-			padding: 0 15px;
-				}
-				
-				#search-button {
-			padding: 0 20px;
-				}
-				.title {
-			font-size: 2rem;
-				}
-			
-				.example {
-			padding: 1rem;
-			font-size: 0.8rem;
-			padding-left: 1rem;
-			padding-right: 1rem;
-				}
-			
-				.result {
-			flex-direction: column;
-				}
-			
-				.result a {
-			word-break: break-word;
-				}
-			
-				.retext {
-			flex-direction: row;
-			justify-content: space-between;
-			align-items: flex-start;
-				}
-			
-				.retext p {
+<html>
+<head>
+    <title>Docker Hub 镜像搜索</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @font-face {
+          font-family: 'iconfont';  /* Project id 4892763 */
+          src: url('//at.alicdn.com/t/c/font_4892763_d4ir0ka4xlu.woff2?t=1744700725694') format('woff2'),
+               url('//at.alicdn.com/t/c/font_4892763_d4ir0ka4xlu.woff?t=1744700725694') format('woff'),
+               url('//at.alicdn.com/t/c/font_4892763_d4ir0ka4xlu.ttf?t=1744700725694') format('truetype');
+        }
+        
+        .iconfont {
+            font-family: "iconfont" !important;
+            font-size: 16px;
+            font-style: normal;
+            color: #fff;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        :root {
+            --primary-color: #6e00aa;
+            --primary-hover: #9f00f4;
+            --text-color: #f0f6fc;
+            --bg-gradient: linear-gradient(135deg, #8100c2 0%, #46006a 100%);
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; 
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: var(--bg-gradient);
+            color: var(--text-color);
+            padding: 20px;
+        }
+        
+        .container {
+            text-align: center;
+            width: 100%;
+            max-width: 800px;
+            padding: 0 20px;
+            margin: 0 auto; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+        }
+        
+        .logo {
+            margin-bottom: 2rem;
+            transform: scale(1);
+            transition: transform 0.3s ease;
+        }
+        
+        .logo:hover {
+            transform: scale(1.1);
+        }
+        
+        .title {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #ffffff, #e2e8f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .tips a {
+            color: #FFFFFF;
+            text-decoration: none;
+            border-bottom: 1px dashed #FFFFFF;
+            transition: all 0.2s ease;
+        }
+        
+        .tips a:hover {
+            color: #FFFFFF;
+            border-bottom-color: #FFFFFF;
+        }
+        
+        .search-container {
+        	position: relative;
+        	max-width: 760px;
+        	margin: 2rem auto;
+			align-items: stretch;
 			width: 100%;
-			margin-right: 0;
-			margin-bottom: 10px;
-			text-align: left;
-				}
-			
-			}
-			
-			.result {
-				margin-top: 1rem;
-				margin-bottom: 1rem;
-				padding: 1rem;
-				background: rgba(255, 255, 255, 0.1);
-				border-radius: 8px;
-				text-align: left;
-				border: 1px solid rgba(255, 255, 255, 0.2);
-				position: relative;
-				min-height: 100px;
-				display: flex;
-				flex-direction: column;
-			}
-			
-			.retext {
-				color: #FFFFFF;
-				text-decoration: none;
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				width: 100%;
-			}
-			
-			.retext p {
-				flex: 1;
-				max-width: 90%;
-				word-break: break-word;
-				overflow-wrap: break-word;
-				margin-right: 10px;
-			}
-			
-			.result a {
-				color: #FFFFFF;
-				text-decoration: none;
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				word-break: break-word;
-			}
-			
-			.button-container {
-				display: flex;
-				flex-direction: column;
-				gap: 10px;
-				position: absolute;
-				right: 1rem;
-				top: 50%;
-				transform: translateY(-50%);
-			}
-			
-			.button {
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				width: 40px;
-				height: 40px;
-				background: rgba(255, 255, 255, 0.1);
-				border-radius: 8px;
-				color: white;
-				cursor: pointer;
-				transition: all 0.2s ease;
-			}
-			
-			.button:hover {
-				background: rgba(255, 255, 255, 0.2);
-				color: #1E90FF;
-			}
-			
-			.button span.iconfont {
-				font-size: 20px;
-			}
-			
-			.domain-list {
-				list-style-type: none;
-				margin-left: 2rem;
-				padding-left: 0;
-			}
-			
-			.domain-list li {
-				margin-bottom: 0.5rem;
-			}
-			
-			.notification {
-				position: fixed;
-				top: 20px;
-				left: 50%;
-				transform: translateX(-50%);
-				background: rgba(70, 0, 106, 0.9);
-				color: white;
-				padding: 1rem 2rem;
-				border-radius: 15px;
-				z-index: 1000;
-				opacity: 0;
-				transition: opacity 0.3s ease;
-			}
-			
-			.notification.show {
-				opacity: 1;
-			}
-			
-			p a {
-				color: #FFFFFF;
-				text-decoration: none;
-			}
-			
-			p a:hover {
-				text-decoration: underline;
-			}
-			
-			.code-block {
-			    position: relative;
-			    margin: 20px 0;
-			    border-radius: 10px;
-			    overflow: hidden;
-			}
-			.copy-button {
-			    position: absolute;
-			    top: 10px;
-			    right: 10px;
-			    background-color: #f5f5f5;
-			    border: none;
-			    border-radius: 4px;
-			    padding: 5px 10px;
-			    cursor: pointer;
-			    font-size: 14px;
-			    display: flex;
-			    align-items: center;
-			    justify-content: center;
-			}
-			.copy-button:hover {
-			    background-color: #e0e0e0;
-			}
-			.copy-button.success {
-			    background-color: #4CAF50;
-			    color: white;
-			}
-			.copy-icon {
-			    font-family: iconfont;
-			    font-size: 16px;
-			}
-			pre {
-			    border-radius: 10px;
-			    overflow: hidden;
-			}
-		</style>
-	</head>
-	<body>
-		<div class="container">
-			<div class="logo">
-				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 18" fill="#ffffff" width="120" height="90">
-					<path d="M23.763 6.886c-.065-.053-.673-.512-1.954-.512-.32 0-.659.03-1.01.087-.248-1.703-1.651-2.533-1.716-2.57l-.345-.2-.227.328a4.596 4.596 0 0 0-.611 1.433c-.23.972-.09 1.884.403 2.666-.596.331-1.546.418-1.744.42H.752a.753.753 0 0 0-.75.749c-.007 1.456.233 2.864.692 4.07.545 1.43 1.355 2.483 2.409 3.13 1.181.725 3.104 1.14 5.276 1.14 1.016 0 2.03-.092 2.93-.266 1.417-.273 2.705-.742 3.826-1.391a10.497 10.497 0 0 0 2.61-2.14c1.252-1.42 1.998-3.005 2.553-4.408.075.003.148.005.221.005 1.371 0 2.215-.55 2.68-1.01.505-.5.685-.998.704-1.053L24 7.076l-.237-.19Z"></path>
-					<path d="M2.216 8.075h2.119a.186.186 0 0 0 .185-.186V6a.186.186 0 0 0-.185-.186H2.216A.186.186 0 0 0 2.031 6v1.89c0 .103.083.186.185.186Zm2.92 0h2.118a.185.185 0 0 0 .185-.186V6a.185.185 0 0 0-.185-.186H5.136A.185.185 0 0 0 4.95 6v1.89c0 .103.083.186.186.186Zm2.964 0h2.118a.186.186 0 0 0 .185-.186V6a.186.186 0 0 0-.185-.186H8.1A.185.185 0 0 0 7.914 6v1.89c0 .103.083.186.186.186Zm2.928 0h2.119a.185.185 0 0 0 .185-.186V6a.185.185 0 0 0-.185-.186h-2.119a.186.186 0 0 0-.185.186v1.89c0 .103.083.186.185.186Zm-5.892-2.72h2.118a.185.185 0 0 0 .185-.186V3.28a.186.186 0 0 0-.185-.186H5.136a.186.186 0 0 0-.186.186v1.89c0 .103.083.186.186.186Zm2.964 0h2.118a.186.186 0 0 0 .185-.186V3.28a.186.186 0 0 0-.185-.186H8.1a.186.186 0 0 0-.186.186v1.89c0 .103.083.186.186.186Zm2.928 0h2.119a.185.185 0 0 0 .185-.186V3.28a.186.186 0 0 0-.185-.186h-2.119a.186.186 0 0 0-.185.186v1.89c0 .103.083.186.185.186Zm0-2.72h2.119a.186.186 0 0 0 .185-.186V.56a.185.185 0 0 0-.185-.186h-2.119a.186.186 0 0 0-.185.186v1.89c0 .103.083.186.185.186Zm2.955 5.44h2.118a.185.185 0 0 0 .186-.186V6a.185.185 0 0 0-.186-.186h-2.118a.185.185 0 0 0-.185.186v1.89c0 .103.083.186.185.186Z"></path>
-				</svg>
-			</div>
-			<h1 class="title">Docker Hub 镜像搜索</h1>
-			<p class="subtitle"><br /></p>
-			<div class="search-container">
-				<input type="text" id="search-input" placeholder="输入关键词搜索镜像，如: nginx, mysql, redis...">
-				<button id="search-button" title="搜索">
-					<svg focusable="false" aria-hidden="true" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<path d="M21 21L16.65 16.65M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-					</svg>
-				</button>
-			</div>
-			<div class="example">
-				<div class="example-title"><span class="iconfont">&#xe6aa;</span>️️️ 提示：</div>
-				<p><span class="iconfont">&#xe72a;</span>️️ 输入要搜索镜像的关键词，按回车键快速搜索</p>
-			</div>
-			<div class="example">
-				<div class="example-title"><span class="iconfont">&#xe655;</span>️️️ 基本使用示例：</div>
-				<p><span class="iconfont">&#xe600;</span>️️️ 在官方镜像路径前面加上本站域名</p>
-			<div class="code-block">
-			        <button class="copy-button" data-clipboard-target="#code1">
-			            <span class="copy-icon">&#xe60f;</span>
-			        </button>
-<pre><code class="language-bash" id="code1">docker pull docker.arelay.cn/stilleshan/frpc:latest</code></pre>
-			</div>
-			<div class="code-block">
-			        <button class="copy-button" data-clipboard-target="#code2">
-			            <span class="copy-icon">&#xe60f;</span>
-			        </button>
-<pre><code class="language-bash" id="code2">docker pull docker.arelay.cn/library/nginx:stable-alpine3.19-perl</code></pre>
-				</div>
-			</div>
-			<div class="example">
-				<div class="example-title"><span class="iconfont">&#xe617;</span>️️️ 一键设置镜像加速：</div>
-				<p><span class="iconfont">&#xe600;</span>️️️ 修改文件 <span class="tag">/etc/docker/daemon.json</span>（如果不存在则创建）</p>
-			<div class="code-block">
-					<button class="copy-button" data-clipboard-target="#code3">
-					<span class="copy-icon">&#xe60f;</span>
-					</button>
-<pre><code class="language-bash" id="code3">sudo mkdir -p /etc/docker
+			margin: 0 auto;
+        }
+		
+        #search-input {
+        	width: 99%;
+        	height: 56px;
+        	padding: 0 60px 0 24px;
+        	font-size: 1rem;
+        	color: #1f2937;
+        	background: rgba(255, 255, 255, 0.9);
+        	border: 2px solid transparent;
+        	border-radius: 12px;
+        	box-shadow: var(--shadow);
+        	transition: all 0.3s ease;
+        }
+		
+		#search-input:focus {
+			border-color: var(--primary-color);
+			background: white;
+			outline: none;
+			box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.6);
+		}
+		
+        #search-button {
+        	position: absolute;
+        	right: 8px;
+        	top: 50%;
+        	transform: translateY(-50%);
+        	width: 44px;
+        	height: 44px;
+        	border: none;
+        	border-radius: 8px;
+        	background: var(--primary-color);
+        	color: white;
+        	cursor: pointer;
+        	transition: all 0.2s ease;
+        	display: flex;
+        	justify-content: center;
+        	align-items: center;
+        }
+        
+        #search-button:hover {
+        	background: var(--primary-hover);
+        	transform: translateY(-50%) scale(1.05);
+        }
+		
+		#search-button svg {
+			width: 24px;
+			height: 24px;
+		}
+        
+        .example {
+            margin-top: 2rem;
+            padding: 1.8rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            text-align: left;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+        }
+        
+        .example-title {
+            color: #fff;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            font-weight: 700;
+            position: relative;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        pre {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-family: monospace;
+            color: #f0f6fc;
+            position: relative;
+        }
+        
+        .copy-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 14px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+		
+		.copy-icon {
+		    font-family: iconfont;
+		    font-size: 16px;
+        }
+		
+        .copy-button:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .copy-button.success {
+            background-color: rgba(76, 175, 80, 0.3);
+            color: white;
+        }
+		
+		p a {
+			color: #FFFFFF;
+			text-decoration: none;
+		}
+		
+		p a:hover {
+			text-decoration: underline;
+		}
+        
+        @media (max-width: 640px) {
+            .container {
+                padding: 0 15px;
+                min-height: 60vh;
+            }
+            
+            .search-container {
+                height: 45px;
+            }
+            
+            #search-input {
+                padding: 0 15px;
+            }
+            
+            #search-button {
+                padding: 0 20px;
+            }
+            
+            .title {
+                font-size: 2rem;
+            }
+            
+            .example {
+                padding: 1rem;
+                font-size: 0.8rem;
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+        }
+		/* Navbar section */
+					.nav {
+					    width: 100%;
+					    height: 65px;
+					    position: fixed;
+					    line-height: 65px;
+						top: 0;
+						left: 0;
+					    text-align: center;
+					    background-color: rgba(17, 17, 17, 0); /* 初始全透明 */
+					    transition: background-color 0.3s ease;
+					    z-index: 1000;
+					}
+					
+					.nav .navcontainer {
+					    max-width: 70%;
+					    margin: 0 auto;
+					    width: 100%;
+					}
+					
+					.nav div.navlogo {
+					    float: left;
+						padding-top: 10px;
+					    width: auto;
+					    height: auto;
+					    padding-left: 3rem;
+					    transition: padding-left 0.3s ease;
+					}
+					
+					.nav div.navlogo a {
+					    text-decoration: none;
+					    color: #fff;
+					    font-size: 25px;
+					}
+					
+					.nav div.navlogo a:hover {
+					    color: #00E676;
+					}
+					
+					.nav div.main_list {
+					    height: 65px;
+					    float: right;
+					}
+					
+					.nav div.main_list ul {
+					    width: 100%;
+					    height: 65px;
+					    display: flex;
+					    list-style: none;
+					    margin: 0;
+					    padding: 0;
+					}
+					
+					.nav div.main_list ul li {
+					    width: auto;
+					    height: 65px;
+					    padding: 0;
+					    padding-right: 3rem;
+					}
+					
+					.nav div.main_list ul li a {
+					    text-decoration: none;
+					    color: #fff;
+					    line-height: 65px;
+					    font-size: 25px;
+					}
+					
+					.nav div.main_list ul li a:hover {
+					    color: #00E676;
+					}
+					
+					.navTrigger {
+					    display: none;
+					}
+					
+					.nav {
+					    padding-top: 20px;
+					    padding-bottom: 20px;
+					    -webkit-transition: all 0.4s ease;
+					    transition: all 0.4s ease;
+					}
+					
+					
+					/* Media query section */
+					
+					@media screen and (min-width: 768px) and (max-width: 1024px) {
+					    .navcontainer {
+					        margin: 0;
+					    }
+					}
+					
+					@media screen and (max-width:768px) {
+					    .navTrigger {
+					        display: block;
+					    }
+					    .nav .navcontainer {
+					        max-width: 100%;
+					    }
+					    .nav div.navlogo {
+							padding-top: -10px;
+					        padding-left: 1rem; /* 减少左边距 */
+					    }
+					    .nav div.main_list {
+							margin-top: -15px;
+					        width: 100%;
+					        height: 0;
+					        overflow: hidden;
+					    }
+					    .nav div.show_list {
+					        height: auto;
+					        display: none;
+					    }
+					    .nav div.main_list ul {
+					        flex-direction: column;
+					        width: 100%;
+					        height: 100vh;
+					        right: 0;
+					        left: 0;
+					        bottom: 0;
+					        background-color: rgba(117, 0, 121, 0.5); /* 半透明浅灰色 */
+					        background-position: center top;
+					    }
+					    .nav div.main_list ul li {
+					        width: 100%;
+					        text-align: center; /* 居中对齐 */
+					    }
+					    .nav div.main_list ul li a {
+					        text-align: center;
+					        width: 100%;
+					        font-size: 25px;
+					        padding: 20px;
+					    }
+					    .nav div.media_button {
+					        display: block;
+					    }
+					}
+					
+					
+					/* Animation */
+					
+					.navTrigger {
+					    cursor: pointer;
+					    width: 30px;
+					    height: 25px;
+					    margin: auto;
+					    position: absolute;
+					    right: 30px;
+					    top: 0;
+					    bottom: 0;
+					}
+					
+					.navTrigger i {
+					    background-color: #fff;
+					    border-radius: 2px;
+					    content: '';
+					    display: block;
+					    width: 100%;
+					    height: 4px;
+					}
+					
+					.navTrigger i:nth-child(1) {
+					    -webkit-animation: outT 0.8s backwards;
+					    animation: outT 0.8s backwards;
+					    -webkit-animation-direction: reverse;
+					    animation-direction: reverse;
+					}
+					
+					.navTrigger i:nth-child(2) {
+					    margin: 5px 0;
+					    -webkit-animation: outM 0.8s backwards;
+					    animation: outM 0.8s backwards;
+					    -webkit-animation-direction: reverse;
+					    animation-direction: reverse;
+					}
+					
+					.navTrigger i:nth-child(3) {
+					    -webkit-animation: outBtm 0.8s backwards;
+					    animation: outBtm 0.8s backwards;
+					    -webkit-animation-direction: reverse;
+					    animation-direction: reverse;
+					}
+					
+					.navTrigger.active i:nth-child(1) {
+					    -webkit-animation: inT 0.8s forwards;
+					    animation: inT 0.8s forwards;
+					}
+					
+					.navTrigger.active i:nth-child(2) {
+					    -webkit-animation: inM 0.8s forwards;
+					    animation: inM 0.8s forwards;
+					}
+					
+					.navTrigger.active i:nth-child(3) {
+					    -webkit-animation: inBtm 0.8s forwards;
+					    animation: inBtm 0.8s forwards;
+					}
+					
+					@-webkit-keyframes inM {
+					    50% {
+					        -webkit-transform: rotate(0deg);
+					    }
+					    100% {
+					        -webkit-transform: rotate(45deg);
+					    }
+					}
+					
+					@keyframes inM {
+					    50% {
+					        transform: rotate(0deg);
+					    }
+					    100% {
+					        transform: rotate(45deg);
+					    }
+					}
+					
+					@-webkit-keyframes outM {
+					    50% {
+					        -webkit-transform: rotate(0deg);
+					    }
+					    100% {
+					        -webkit-transform: rotate(45deg);
+					    }
+					}
+					
+					@keyframes outM {
+					    50% {
+					        transform: rotate(0deg);
+					    }
+					    100% {
+					        transform: rotate(45deg);
+					    }
+					}
+					
+					@-webkit-keyframes inT {
+					    0% {
+					        -webkit-transform: translateY(0px) rotate(0deg);
+					    }
+					    50% {
+					        -webkit-transform: translateY(9px) rotate(0deg);
+					    }
+					    100% {
+					        -webkit-transform: translateY(9px) rotate(135deg);
+					    }
+					}
+					
+					@keyframes inT {
+					    0% {
+					        transform: translateY(0px) rotate(0deg);
+					    }
+					    50% {
+					        transform: translateY(9px) rotate(0deg);
+					    }
+					    100% {
+					        transform: translateY(9px) rotate(135deg);
+					    }
+					}
+					
+					@-webkit-keyframes outT {
+					    0% {
+					        -webkit-transform: translateY(0px) rotate(0deg);
+					    }
+					    50% {
+					        -webkit-transform: translateY(9px) rotate(0deg);
+					    }
+					    100% {
+					        -webkit-transform: translateY(9px) rotate(135deg);
+					    }
+					}
+					
+					@keyframes outT {
+					    0% {
+					        transform: translateY(0px) rotate(0deg);
+					    }
+					    50% {
+					        transform: translateY(9px) rotate(0deg);
+					    }
+					    100% {
+					        transform: translateY(9px) rotate(135deg);
+					    }
+					}
+					
+					@-webkit-keyframes inBtm {
+					    0% {
+					        -webkit-transform: translateY(0px) rotate(0deg);
+					    }
+					    50% {
+					        -webkit-transform: translateY(-9px) rotate(0deg);
+					    }
+					    100% {
+					        -webkit-transform: translateY(-9px) rotate(135deg);
+					    }
+					}
+					
+					@keyframes inBtm {
+					    0% {
+					        transform: translateY(0px) rotate(0deg);
+					    }
+					    50% {
+					        transform: translateY(-9px) rotate(0deg);
+					    }
+					    100% {
+					        transform: translateY(-9px) rotate(135deg);
+					    }
+					}
+					
+					@-webkit-keyframes outBtm {
+					    0% {
+					        -webkit-transform: translateY(0px) rotate(0deg);
+					    }
+					    50% {
+					        -webkit-transform: translateY(-9px) rotate(0deg);
+					    }
+					    100% {
+					        -webkit-transform: translateY(-9px) rotate(135deg);
+					    }
+					}
+					
+					@keyframes outBtm {
+					    0% {
+					        transform: translateY(0px) rotate(0deg);
+					    }
+					    50% {
+					        transform: translateY(-9px) rotate(0deg);
+					    }
+					    100% {
+					        transform: translateY(-9px) rotate(135deg);
+					    }
+					}
+					
+					.affix {
+					    padding: 0;
+					    background-color: rgba(17, 17, 17, 0.8); /* 半透明背景 */
+					}
+					
+					}
+    </style>
+</head>
+<body>
+	<nav class="nav">
+			          <div class="navcontainer">
+			              <div class="navlogo">
+			                  <a href="https://arelay.cn"><svg xmlns="http://www.w3.org/2000/svg" height="40" viewBox="0 0 2000 512">
+						<image href="https://kuwinet.github.io/logoa.svg" />
+					</svg></a>
+			              </div>
+			              <div id="mainListDiv" class="main_list">
+			                  <ul class="navlinks">
+			                      <li><a href="https://arelay.cn">Github 文件加速</a></li>
+			                      <li><a href="https://docker.arelay.cn"><font style="color: #00E676;">Docker 镜像加速</font></a></li>
+			                      <li><a href="https://kuwi.net" target="_blank">KuWi 宝藏</a></li>
+			                      <li><a href="https://www.afrp.net" target="_blank">aFrp 免费FRP服务</a></li>
+			                  </ul>
+			              </div>
+			              <span class="navTrigger">
+			                  <i></i>
+			                  <i></i>
+			                  <i></i>
+			              </span>
+			          </div>
+			      </nav>
+				  
+    <div class="container">
+        <div class="search-container">
+            <input type="text" id="search-input" placeholder="输入关键词搜索镜像，如: nginx, mysql, redis...">
+            <button id="search-button" title="搜索">
+                <svg focusable="false" aria-hidden="true" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 21L16.65 16.65M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+            </button>
+        </div>
+        <div class="example">
+            <div class="example-title"><span class="iconfont">&#xe6aa;</span>️️️ 提示：</div>
+            <p><span class="iconfont">&#xe72a;</span>️️ 输入要搜索镜像的关键词，按回车键快速搜索</p>
+        </div>
+        <div class="example">
+            <div class="example-title"><span class="iconfont">&#xe655;</span>️️️ 基本使用示例：</div>
+            <p><span class="iconfont">&#xe600;</span>️️️ 在官方镜像路径前面加上本站域名</p>
+            <pre>
+                <button class="copy-button" data-clipboard-target="#code1">
+                    <span class="copy-icon">&#xe60f;</span>
+                </button>
+<code class="language-bash" id="code1">docker pull docker.arelay.cn/stilleshan/frpc:latest</code>
+            </pre>
+            <pre>
+                <button class="copy-button" data-clipboard-target="#code2">
+                    <span class="copy-icon">&#xe60f;</span>
+                </button>
+<code class="language-bash" id="code2">docker pull docker.arelay.cn/library/nginx:stable-alpine3.19-perl</code>
+            </pre>
+        </div>
+        <div class="example">
+            <div class="example-title"><span class="iconfont">&#xe617;</span>️️️ 一键设置镜像加速：</div>
+            <p><span class="iconfont">&#xe600;</span>️️️ 修改文件 <span class="tag">/etc/docker/daemon.json</span>（如果不存在则创建）</p>
+            <pre>
+                <button class="copy-button" data-clipboard-target="#code3">
+                    <span class="copy-icon">&#xe60f;</span>
+                </button>
+<code class="language-bash" id="code3">sudo mkdir -p /etc/docker
 sudo tee /etc/docker/daemon.json <<-'EOF'
 {
   "registry-mirrors": ["docker.arelay.cn"]
 }
 EOF
 sudo systemctl daemon-reload
-sudo systemctl restart docker</code></pre>
-			</div>
-			</div>
-	
-
-			<p style="position: sticky;top: calc(100% - 2.5em);">
-				<br><br>
-				Support by <a href="https://kuwi.net/" target="_blank">KuWi</a> ,  Run on Cloudflare Workers .
-			</p>
-		</div>
-	<script>
-		document.addEventListener('DOMContentLoaded', function() {
-		    // 为所有复制按钮添加事件监听器
-		    const copyButtons = document.querySelectorAll('.copy-button');
-		    copyButtons.forEach(button => {
-		        button.addEventListener('click', function() {
-		            const targetId = this.getAttribute('data-clipboard-target');
-		            const codeBlock = document.querySelector(targetId);
-		            const textToCopy = codeBlock.innerText;
-		            
-		            navigator.clipboard.writeText(textToCopy).then(() => {
-		                const button = this;
-		                const originalIcon = button.querySelector('.copy-icon').outerHTML;
-		                button.innerHTML = '已复制！';
-		                button.classList.add('success');
-		                
-		                setTimeout(() => {
-		                    button.innerHTML = originalIcon;
-		                    button.classList.remove('success');
-		                }, 2000);
-		            }).catch(err => {
-		                console.error('复制失败:', err);
-		            });
-		        });
-		    });
-		
-		    // 搜索框功能
-		    function performSearch() {
-		        const query = document.getElementById('search-input').value;
-		        if (query) {
-		            window.location.href = '/search?q=' + encodeURIComponent(query);
-		        }
-		    }
-		
-		    const searchButton = document.getElementById('search-button');
-		    const searchInput = document.getElementById('search-input');
-		
-		    if (searchButton) {
-		        searchButton.addEventListener('click', performSearch);
-		    }
-		
-		    if (searchInput) {
-		        searchInput.addEventListener('keypress', function(event) {
-		            if (event.key === 'Enter') {
-		                performSearch();
-		            }
-		        });
-		    }
-		});
-	</script>
-	</body>
-	</html>
+sudo systemctl restart docker</code>
+            </pre>
+        </div>
+        <p style="position: sticky;top: calc(100% - 2.5em);">
+            <br><br>
+            Support by <a href="https://kuwi.net/" target="_blank">KuWi</a> ,  Run on Cloudflare Workers .
+        </p>
+    </div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 为所有复制按钮添加事件监听器
+            const copyButtons = document.querySelectorAll('.copy-button');
+            copyButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const targetId = this.getAttribute('data-clipboard-target');
+                    const codeBlock = document.querySelector(targetId);
+                    const textToCopy = codeBlock.innerText;
+                    
+                    navigator.clipboard.writeText(textToCopy).then(() => {
+                        const button = this;
+                        const originalIcon = button.querySelector('.copy-icon').outerHTML;
+                        button.innerHTML = '已复制！';
+                        button.classList.add('success');
+                        
+                        setTimeout(() => {
+                            button.innerHTML = originalIcon;
+                            button.classList.remove('success');
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('复制失败:', err);
+                    });
+                });
+            });
+        
+            // 搜索框功能
+            function performSearch() {
+                const query = document.getElementById('search-input').value;
+                if (query) {
+                    window.location.href = '/search?q=' + encodeURIComponent(query);
+                }
+            }
+        
+            const searchButton = document.getElementById('search-button');
+            const searchInput = document.getElementById('search-input');
+        
+            if (searchButton) {
+                searchButton.addEventListener('click', performSearch);
+            }
+        
+            if (searchInput) {
+                searchInput.addEventListener('keypress', function(event) {
+                    if (event.key === 'Enter') {
+                        performSearch();
+                    }
+                });
+            }
+			
+			$('.navTrigger').click(function () {
+			    $(this).toggleClass('active');
+			    $("#mainListDiv").toggleClass("show_list");
+			    $("#mainListDiv").fadeIn();
+			});
+			
+			$(window).scroll(function() {
+			    if ($(document).scrollTop() > 50) {
+			        $('.nav').addClass('affix');
+			    } else {
+			        $('.nav').removeClass('affix');
+			    }
+			});
+			
+			$(window).resize(function() {
+			    if ($(window).width() <= 768) {
+			        $('.nav div.logo').css('padding-left', '1rem');
+			    } else {
+			        $('.nav div.logo').css('padding-left', '3rem');
+			    }
+			});
+        });
+    </script>
+</body>
+</html>

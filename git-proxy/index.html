@@ -6,19 +6,33 @@
 	<link rel="shortcut icon" href="favicon.ico">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="navstyle.css">
 </head>
 <body>
+	<nav class="nav">
+			          <div class="navcontainer">
+			              <div class="navlogo">
+			                  <a href="https://arelay.cn"><svg xmlns="http://www.w3.org/2000/svg" height="40" viewBox="0 0 2000 512">
+						<image href="logoa.svg" />
+					</svg></a>
+			              </div>
+			              <div id="mainListDiv" class="main_list">
+			                  <ul class="navlinks">
+			                      <li><a href="#"><font style="color: #00E676;">Github 文件加速</font></a></li>
+			                      <li><a href="https://docker.arelay.cn">Docker 镜像加速</a></li>
+			                      <li><a href="https://kuwi.net" target="_blank">KuWi 宝藏</a></li>
+			                      <li><a href="https://www.afrp.net" target="_blank">aFrp 免费FRP服务</a></li>
+			                  </ul>
+			              </div>
+			              <span class="navTrigger">
+			                  <i></i>
+			                  <i></i>
+			                  <i></i>
+			              </span>
+			          </div>
+			      </nav>
+				  
 	<div class="container">
-		<center>
-			<div class="logo">
-				<a href="https://github.com/KuwiNet/CF-Ghproxy" target="_blank">
-					<svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 512 512">
-						<image href="logo.svg" />
-					</svg>
-				</a>
-			</div>
-			<h1 class="title">GitHub 文件加速</h1>
-		</center>
 
 		<form onsubmit="toSubmit(event)" class="search-container">
 			<input 
@@ -87,7 +101,8 @@
 	<div id="notification" class="notification">
 		
 	</div>
-
 	<script src="script.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script src="navjs.js"></script>
 </body>
 </html>
