@@ -1,8 +1,8 @@
 @font-face {
 	font-family: 'iconfont';
-	src: url('iconfont.woff2?t=1744700749830') format('woff2'),
-	     url('iconfont.woff?t=1744700749830') format('woff'),
-	     url('iconfont.ttf?t=1744700749830') format('truetype');
+	src: url('https://kuwinet.github.io/iconfont.woff2?t=1744700749830') format('woff2'),
+	     url('https://kuwinet.github.io/iconfont.woff?t=1744700749830') format('woff'),
+	     url('https://kuwinet.github.io/iconfont.ttf?t=1744700749830') format('truetype');
 }
 
 .iconfont {
