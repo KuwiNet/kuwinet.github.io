@@ -1,52 +1,48 @@
-function toSubmit(e) {
-	e.preventDefault();
-	const input = document.getElementsByName('q')[0];
-	let userInput = input.value;
+document.addEventListener('DOMContentLoaded', function() {
+    // 为所有复制按钮添加事件监听器
+    const copyButtons = document.querySelectorAll('.copy-button');
+    copyButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const targetId = this.getAttribute('data-clipboard-target');
+            const codeBlock = document.querySelector(targetId);
+            const textToCopy = codeBlock.innerText;
+            
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const button = this;
+                const originalIcon = button.querySelector('.copy-icon').outerHTML;
+                button.innerHTML = '已复制！';
+                button.classList.add('success');
+                
+                setTimeout(() => {
+                    button.innerHTML = originalIcon;
+                    button.classList.remove('success');
+                }, 2000);
+            }).catch(err => {
+                console.error('复制失败:', err);
+            });
+        });
+    });
 
-	// 去掉协议头
-	userInput = userInput.replace(/^https?:\/\//, '');
+    // 搜索框功能
+    function performSearch() {
+        const query = document.getElementById('search-input').value;
+        if (query) {
+            window.location.href = '/search?q=' + encodeURIComponent(query);
+        }
+    }
 
-	// 验证域名
-	const validDomains = ['github.com', 'raw.githubusercontent.com', 'gist.githubusercontent.com', 'api.github.com'];
-	const isValidDomain = validDomains.some(domain => userInput.startsWith(domain));
+    const searchButton = document.getElementById('search-button');
+    const searchInput = document.getElementById('search-input');
 
-	if (!isValidDomain) {
-		showNotification('&#xe6aa;', '&nbsp;请输入 Github 链接');
-		input.value = '';
-		return;
-	}
+    if (searchButton) {
+        searchButton.addEventListener('click', performSearch);
+    }
 
-	const baseUrl = location.href.substr(0, location.href.lastIndexOf('/') + 1);
-	const generatedUrl = baseUrl + userInput;
-
-	// 显示生成的链接
-	document.getElementById('generated-link').href = generatedUrl;
-	document.getElementById('generated-link').textContent = generatedUrl;
-	document.getElementById('result').style.display = 'block';
-
-	// 清空输入框
-	input.value = '';
-}
-
-function copyLink() {
-	const link = document.getElementById('generated-link').href;
-	navigator.clipboard.writeText(link).then(() => {
-		showNotification('&#xe63f;', '&nbsp;链接已复制');
-	}, (err) => {
-		console.error('复制失败:', err);
-	});
-}
-
-function jumpToLink() {
-	const link = document.getElementById('generated-link').href;
-	window.open(link, '_blank');
-}
-
-function showNotification(iconCode, message) {
-	const notification = document.getElementById('notification');
-	notification.innerHTML = `<span class="iconfont">${iconCode}</span> ${message}`;
-	notification.classList.add('show');
-	setTimeout(() => {
-		notification.classList.remove('show');
-	}, 3000);
-}
+    if (searchInput) {
+        searchInput.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                performSearch();
+            }
+        });
+    }
+});

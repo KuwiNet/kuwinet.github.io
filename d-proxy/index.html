@@ -3,193 +3,12 @@
 	<head>
 		<title>Docker Hub 镜像搜索</title>
 		<meta charset="UTF-8">
+		<link rel="shortcut icon" href="favicon.ico">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<style>
-		:root {
-			--github-color: #f0f6fc;
-			--githubbj-color: #010409;
-		}
-		
-		* {
-			box-sizing: border-box;
-			margin: 0;
-			padding: 0;
-		}
-
-		body {
-			font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-			display: flex;
-			flex-direction: column;
-			justify-content: center; // 新增
-			align-items: center;
-			min-height: 100vh;
-			margin: 0;
-			background: linear-gradient(120deg, #1a90ff 0%, #003eb3 100%);
-			padding: 20px;
-		}
-
-		.container {
-			text-align: center;
-			width: 100%;
-			max-width: 800px;
-			padding: 0 20px;
-			margin: 0 auto; // 修改
-			display: flex; // 新增
-			flex-direction: column; // 新增
-			justify-content: center; // 新增
-			min-height: 70vh; // 新增
-		}
-
-		.github-corner {
-			position: fixed;
-			top: 0;
-			right: 0;
-			z-index: 999;
-		}
-
-		.github-corner svg {
-			fill: var(githubbj-color);
-			color: var(--github-color);
-			position: absolute;
-			top: 0;
-			border: 0;
-			right: 0;
-			width: 80px;
-			height: 80px;
-		}
-
-		.github-corner a,
-		.github-corner a:visited {
-		color: var(--github-color) !important;
-		}
-
-		.github-corner a,
-		.github-corner a:visited {
-		color: transparent !important;
-		text-decoration: none !important;
-		}
-
-		.github-corner .octo-body,
-		.github-corner .octo-arm {
-		fill: var(--github-color) !important;
-		}
-
-		.github-corner:hover .octo-arm {
-			animation: octocat-wave 560ms ease-in-out;
-		}
-			
-		@keyframes octocat-wave {
-			0%, 100% {
-				transform: rotate(0);
-			}
-			20%, 60% {
-				transform: rotate(-25deg);
-			}
-			40%, 80% {
-				transform: rotate(10deg);
-			}
-		}
-
-		.logo {
-			margin-bottom: 30px;
-			transition: transform 0.3s ease;
-		}
-		.logo:hover {
-			transform: scale(1.05);
-		}
-		.title {
-			color: white;
-			font-size: 2em;
-			margin-bottom: 10px;
-			text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-		}
-		.subtitle {
-			color: rgba(255,255,255,0.9);
-			font-size: 1.1em;
-			margin-bottom: 30px;
-		}
-		.search-container {
-			display: flex;
-			align-items: stretch;
-			width: 100%;
-			max-width: 600px;
-			margin: 0 auto;
-			height: 50px;
-		}
-		#search-input {
-			flex: 1;
-			padding: 15px 20px;
-			font-size: 16px;
-			border: none;
-			border-radius: 8px 0 0 8px;
-			outline: none;
-			box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-			transition: all 0.3s ease;
-		}
-		#search-input {
-			flex: 1;
-			padding: 0 20px;
-			font-size: 16px;
-			border: none;
-			border-radius: 8px 0 0 8px;
-			outline: none;
-			box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-			transition: all 0.3s ease;
-			height: 100%;
-		}
-		#search-button {
-			padding: 0 25px;
-			background-color: #0066ff;
-			border: none;
-			border-radius: 0 8px 8px 0;
-			cursor: pointer;
-			transition: all 0.3s ease;
-			height: 100%;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-		}
-		#search-button:hover {
-			background-color: #0052cc;
-			transform: translateY(-1px);
-		}
-		#search-button svg {
-			width: 24px;
-			height: 24px;
-		}
-		.tips {
-			color: rgba(255,255,255,0.8);
-			margin-top: 20px;
-			font-size: 0.9em;
-		}
-		@media (max-width: 480px) {
-			.container {
-				padding: 0 15px;
-				min-height: 60vh; // 新增
-			}
-			.github-corner svg {
-				width: 60px;
-				height: 60px;
-			}
-			.github-corner:hover .octo-arm {
-				animation: none;
-			}
-			.github-corner .octo-arm {
-				animation: octocat-wave 560ms ease-in-out;
-			}
-			.search-container {
-				height: 45px;
-			}
-			
-			#search-input {
-				padding: 0 15px;
-			}
-			
-			#search-button {
-				padding: 0 20px;
-			}
-		}
-		</style>
+		<link rel="stylesheet" href="style.css">
+	    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/themes/prism.min.css" rel="stylesheet" />
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/prism.min.js"></script>
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-bash.min.js"></script>
 	</head>
 	<body>
 		<div class="container">
@@ -200,7 +19,7 @@
 				</svg>
 			</div>
 			<h1 class="title">Docker Hub 镜像搜索</h1>
-			<p class="subtitle">快速查找、下载和部署 Docker 容器镜像</p>
+			<p class="subtitle"><br /></p>
 			<div class="search-container">
 				<input type="text" id="search-input" placeholder="输入关键词搜索镜像，如: nginx, mysql, redis...">
 				<button id="search-button" title="搜索">
@@ -209,23 +28,50 @@
 					</svg>
 				</button>
 			</div>
-			<p class="tips">提示：按回车键快速搜索</p>
-			<p class="tips">提示：按回车键快速搜索</p>
-		</div>
-		<script>
-		function performSearch() {
-			const query = document.getElementById('search-input').value;
-			if (query) {
-				window.location.href = '/search?q=' + encodeURIComponent(query);
-			}
-		}
+			<div class="example">
+				<div class="example-title"><span class="iconfont">&#xe6aa;</span>️️️ 提示：</div>
+				<p><span class="iconfont">&#xe72a;</span>️️ 输入要搜索镜像的关键词，按回车键快速搜索</p>
+			</div>
+			<div class="example">
+				<div class="example-title"><span class="iconfont">&#xe655;</span>️️️ 基本使用示例：</div>
+				<p><span class="iconfont">&#xe600;</span>️️️ 在官方镜像路径前面加上本站域名</p>
+			<div class="code-block">
+			        <button class="copy-button" data-clipboard-target="#code1">
+			            <span class="copy-icon">&#xe60f;</span>
+			        </button>
+<pre><code class="language-bash" id="code1">docker pull docker.arelay.cn/stilleshan/frpc:latest</code></pre>
+			</div>
+			<div class="code-block">
+			        <button class="copy-button" data-clipboard-target="#code2">
+			            <span class="copy-icon">&#xe60f;</span>
+			        </button>
+<pre><code class="language-bash" id="code2">docker pull docker.arelay.cn/library/nginx:stable-alpine3.19-perl</code></pre>
+				</div>
+			</div>
+			<div class="example">
+				<div class="example-title"><span class="iconfont">&#xe617;</span>️️️ 一键设置镜像加速：</div>
+				<p><span class="iconfont">&#xe600;</span>️️️ 修改文件 <span class="tag">/etc/docker/daemon.json</span>（如果不存在则创建）</p>
+			<div class="code-block">
+					<button class="copy-button" data-clipboard-target="#code3">
+					<span class="copy-icon">&#xe60f;</span>
+					</button>
+<pre><code class="language-bash" id="code3">sudo mkdir -p /etc/docker
+sudo tee /etc/docker/daemon.json <<-'EOF'
+{
+  "registry-mirrors": ["docker.arelay.cn"]
+}
+EOF
+sudo systemctl daemon-reload
+sudo systemctl restart docker</code></pre>
+			</div>
+			</div>
 	
-		document.getElementById('search-button').addEventListener('click', performSearch);
-		document.getElementById('search-input').addEventListener('keypress', function(event) {
-			if (event.key === 'Enter') {
-				performSearch();
-			}
-		});
-		</script>
+
+			<p style="position: sticky;top: calc(100% - 2.5em);">
+				<br><br>
+				Support by <a href="https://kuwi.net/" target="_blank">KuWi</a> ,  Run on Cloudflare Workers .
+			</p>
+		</div>
+	<script src="script.js"></script>
 	</body>
 	</html>
