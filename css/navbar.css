@@ -1,7 +1,4 @@
 /*----------bootstrap-navbar-css------------*/
-.navbar {
-    z-index: 1000;
-}
 .navbar-logo {
     padding: 5px;
     color: #fff;
@@ -107,7 +104,6 @@
 flex-flow: row nowrap;
 -ms-flex-pack: start;
 justify-content: flex-start;
-z-index: 1000;
     }
     .navbar-expand-custom .navbar-nav {
 -ms-flex-direction: row;
