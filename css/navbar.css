@@ -100,10 +100,10 @@
 .hori-selector .right,
 .hori-selector .left {
     position: absolute;
-    width: 25px;
-    height: 25px;
+    width: 30px;
+    height: 30px;
     background-color: #6e00aa;
-    bottom: 0px;
+    bottom: 10px;
 }
 
 .hori-selector .right {
