@@ -37,7 +37,7 @@ body {
 .container {
     text-align: center;
     width: 100%;
-    max-width: 800px !important;
+    max-width: 900px !important;
     padding: 120px 20px;
     margin: 0 auto; 
     display: flex; 
