@@ -131,15 +131,14 @@ body {
 	align-items: center;
 }
 
+#search-button iconfont {
+	font-size: 20px;
+}
+
 #search-button:hover {
 	background: var(--primary-hover);
 	transform: translateY(-50%) scale(1.05);
 }
-		
-		#search-button svg {
-			width: 24px;
-			height: 24px;
-		}
 
 .example {
     margin-top: 2rem;
@@ -227,7 +226,8 @@ padding: 0 15px;
     }
     
     #search-button {
-padding: 0 20px;
+    	width: 38px;
+    	height: 38px;
     }
     
     .title {
