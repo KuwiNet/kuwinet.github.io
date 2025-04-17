@@ -47,6 +47,16 @@ $(".navbar-toggler").click(function () {
 });
 
 // --------------add active class-on another-page move----------
+//jQuery(document).ready(function ($) {
+//    var path = window.location.pathname.split("/").pop();
+//    
+//    if (path == '') {
+//path = 'index.html';
+//    }
+//    
+//    var target = $('#navbarSupportedContent ul li a[href="' + path + '"]');
+//    target.parent().addClass('active');
+//});
 // 使用 JavaScript 为当前页面的导航项添加 active 类
 document.addEventListener('DOMContentLoaded', function() {
     // 获取当前页面的完整 URL
