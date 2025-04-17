@@ -129,9 +129,11 @@ body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	font-family: iconfont;
-	font-size: 20px !important;
 }
+
+#search-button .iconfont {
+	font-size: 20px !important;
+	}
 
 #search-button:hover {
 	background: var(--primary-hover);
