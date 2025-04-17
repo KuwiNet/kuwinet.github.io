@@ -129,9 +129,7 @@ body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-}
-
-#search-button iconfont {
+	font-family: iconfont;
 	font-size: 20px;
 }
 
@@ -226,8 +224,7 @@ padding: 0 15px;
     }
     
     #search-button {
-    	width: 38px;
-    	height: 38px;
+padding: 0 20px;
     }
     
     .title {
