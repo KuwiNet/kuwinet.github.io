@@ -79,7 +79,7 @@
     transform: rotate(90deg);
 }
 
-.nav-link.iconfont{
+.nav-link .iconfont{
 	font-size: 20px !important;
 }
 
@@ -103,7 +103,7 @@
     width: 25px;
     height: 25px;
     background-color: #6e00aa;
-    bottom: 10px;
+    bottom: 0px;
 }
 
 .hori-selector .right {
