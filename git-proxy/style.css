@@ -1,12 +1,3 @@
-.iconfont {
-	font-family: "iconfont" !important;
-	font-size: 16px;
-	font-style: normal;
-	color: #fff;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-}
-
 :root {
 	--primary-color: #6e00aa;
 	--primary-hover: #9f00f4;
