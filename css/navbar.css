@@ -197,6 +197,11 @@
     .navbar-toggler {
         margin-left: auto;
     }
+	
+	.navbar-toggler .iconfont {
+	    font-size: 20px;
+	}
+	
     .navbar-collapse {
         flex-direction: column;
         width: 100%;
