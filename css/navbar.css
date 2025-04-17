@@ -79,6 +79,10 @@
     transform: rotate(90deg);
 }
 
+.nav-link.iconfont{
+	font-size: 20px;
+}
+
 .hori-selector {
     display: inline-block;
     position: absolute;
