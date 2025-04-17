@@ -22,7 +22,7 @@
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-family: "Comfortaa Bold" !important;
     display: flex;
     flex-direction: column;
     justify-content: center; 
@@ -168,7 +168,7 @@ pre {
     padding: 15px;
     margin: 15px 0;
     overflow-x: auto;
-    font-family: monospace;
+    font-family: "Comfortaa Bold" !important;
     color: #f0f6fc;
     position: relative;
 }
@@ -189,9 +189,9 @@ pre {
     justify-content: center;
 }
 		
-		.copy-icon {
-		    font-family: iconfont;
-		    font-size: 16px;
+.copy-icon {
+    font-family: iconfont;
+    font-size: 16px;
 }
 		
 .copy-button:hover {
