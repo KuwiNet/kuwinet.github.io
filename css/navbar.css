@@ -2,6 +2,16 @@ i {
     margin-right: 10px;
 }
 /*----------bootstrap-navbar-css------------*/
+.nav {
+    width: 100%;
+    position: fixed;
+	top: 0;
+	left: 0;
+    text-align: center;
+    background-color: rgba(17, 17, 17, 0); /* 初始全透明 */
+    transition: background-color 0.3s ease;
+    z-index: 1000;
+}
 .navbar-logo {
     padding: 5px;
     color: #fff;
