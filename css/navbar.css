@@ -15,7 +15,7 @@
 }
 
 .navbar-content {
-    max-width: 1200px;
+    max-width: 900px;
     margin: 0 auto;
     width: 100%;
     display: flex;
@@ -130,7 +130,7 @@
     left: -25px;
 }
 
-@media (min-width: 992px) {
+@media (min-width: 769px) {
     .navbar-expand-custom {
         -ms-flex-flow: row nowrap;
         flex-flow: row nowrap;
@@ -152,7 +152,7 @@
     }
 }
 
-@media (max-width: 991px) {
+@media (max-width: 768px) {
     #navbarSupportedContent ul li a {
         padding: 12px 30px;
     }
