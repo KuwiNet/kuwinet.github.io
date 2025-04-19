@@ -31,7 +31,6 @@ body {
     margin: 0;
     background: var(--bg-gradient);
     color: var(--text-color);
-    padding: 20px;
 }
 
 .container {
@@ -106,12 +105,12 @@ body {
 	transition: all 0.3s ease;
 }
 		
-		#search-input:focus {
-			border-color: var(--primary-color);
-			background: white;
-			outline: none;
-			box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.6);
-		}
+#search-input:focus {
+	border-color: var(--primary-color);
+	background: white;
+	outline: none;
+	box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.6);
+}
 		
 #search-button {
 	position: absolute;
@@ -213,7 +212,7 @@ pre {
 
 @media (max-width: 640px) {
     .container {
-padding: 120px 15px;
+padding: 120px 20px;
 min-height: 60vh;
     }
     
