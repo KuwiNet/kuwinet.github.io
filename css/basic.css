@@ -11,6 +11,19 @@
     font-display:swap;
 }
 
+@font-face{
+    font-family: "All Round Gothic W03 Book";
+    src: url("https://kuwinet.github.io/webfonts/4387b781fdcc752283b72bdc76757065.eot");
+    src: url("https://kuwinet.github.io/webfonts/4387b781fdcc752283b72bdc76757065.eot?#iefix")format("embedded-opentype"),
+        url("https://kuwinet.github.io/webfonts/4387b781fdcc752283b72bdc76757065.woff")format("woff"),
+        url("https://kuwinet.github.io/webfonts/4387b781fdcc752283b72bdc76757065.woff2")format("woff2"),
+        url("https://kuwinet.github.io/webfonts/4387b781fdcc752283b72bdc76757065.ttf")format("truetype"),
+        url("https://kuwinet.github.io/webfonts/4387b781fdcc752283b72bdc76757065.svg#All Round Gothic W03 Book")format("svg");
+    font-weight:normal;
+    font-style:normal;
+    font-display:swap;
+}
+
 @font-face {
 	font-family: 'iconfont';
 	src: url('https://kuwinet.github.io/webfonts/iconfont.woff2?t=1745051767322') format('woff2'),
