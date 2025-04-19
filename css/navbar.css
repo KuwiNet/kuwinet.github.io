@@ -195,6 +195,7 @@
     }
     .navbar-content {
         max-width: none; 
+		padding: 0;
         width: 100%;
     }
     .navbar-brand {
