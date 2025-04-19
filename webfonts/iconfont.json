@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "27364987",
+      "name": "cloudflare",
+      "font_class": "cloudflare",
+      "unicode": "ebf2",
+      "unicode_decimal": 60402
+    },
+    {
       "icon_id": "13080371",
       "name": "搜索",
       "font_class": "sousuo",
