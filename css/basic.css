@@ -30,3 +30,7 @@
 body p:last-of-type {
     color: white !important;
 }
+
+body p:last-of-type:hover {
+    color: white !important;
+}
