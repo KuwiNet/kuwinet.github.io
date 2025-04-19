@@ -5,10 +5,44 @@
     <meta charset="UTF-8">
 	<link rel="shortcut icon" href="https://kuwinet.github.io/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+	<!-- Custom CSS -->
+	<link href="https://kuwinet.github.io/css/navbar.css" rel="stylesheet">
+	<link href="https://kuwinet.github.io/css/basic.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://kuwinet.github.io/d-proxy/style.css">
 </head>
 <body>
-	<div id="navbar-container"></div>
+	<nav class="navbar navbar-expand-custom navbar-mainbg">
+	    <div class="navbar-content">
+	        <a class="navbar-brand navbar-logo" href="https://arelay.cn/"><svg xmlns="http://www.w3.org/2000/svg" height="50" viewBox="0 0 512 512">
+	                <image href="https://kuwinet.github.io/images/logo.svg" />
+	            </svg> arelay.cn</a>
+	        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+	            <span class="iconfont">&#xe63c;</span>
+	        </button>
+	        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+	            <ul class="navbar-nav ml-auto">
+	                <div class="hori-selector">
+	                    <div class="left"></div>
+	                    <div class="right"></div>
+	                </div>
+	                <li class="nav-item">
+	                    <a class="nav-link" href="https://arelay.cn/"><span class="iconfont">&#xe7ab;</span> Github 加速</a>
+	                </li>
+	                <li class="nav-item active">
+	                    <a class="nav-link" href="https://docker.arelay.cn/"><span class="iconfont">&#xe6cc;</span> Docker 加速</a>
+	                </li>
+	                <li class="nav-item">
+	                    <a class="nav-link" href="https://kuwi.net/" target="_blank"><span class="iconfont">&#xe609;</span> KuWi 分享</a>
+	                </li>
+	                <li class="nav-item">
+	                    <a class="nav-link" href="https://www.afrp.net/" target="_blank"><span class="iconfont">&#xe6ea;</span> aFrp 免费FRP服务</a>
+	                </li>
+	            </ul>
+	        </div>
+	    </div>
+	</nav>
 				  
     <div class="container">
         <div class="search-container">
@@ -69,6 +103,5 @@ sudo systemctl restart docker</code>
 	<!-- Custom JS -->
 	<script src="https://kuwinet.github.io/js/navbar.js"></script>
 	<script src="https://kuwinet.github.io/d-proxy/script.js"></script>
-	<script src="https://kuwinet.github.io/js/jnav.js"></script>
 </body>
 </html>
