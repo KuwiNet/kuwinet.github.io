@@ -154,7 +154,7 @@ body {
 
 @media (max-width: 640px) {
 	.container {
-		padding: 88px 20px;
+		padding: 100px 20px;
 		min-height: 60vh;
 	}
 
