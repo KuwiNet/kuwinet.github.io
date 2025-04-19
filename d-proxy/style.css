@@ -86,10 +86,9 @@ body {
 .search-container {
 	position: relative;
 	max-width: 860px;
-	margin: 2rem auto;
-			align-items: stretch;
-			width: 100%;
-			margin: 0 auto;
+	align-items: stretch;
+	width: 100%;
+	margin: 0 auto;
 }
 		
 #search-input {
@@ -201,41 +200,41 @@ pre {
     color: white;
 }
 		
-		p a {
-			color: #FFFFFF;
-			text-decoration: none;
-		}
+p a {
+	color: #FFFFFF;
+	text-decoration: none;
+}
 		
-		p a:hover {
-			text-decoration: underline;
-		}
+p a:hover {
+	text-decoration: underline;
+}
 
 @media (max-width: 640px) {
     .container {
-padding: 120px 20px;
-min-height: 60vh;
+		padding: 120px 20px;
+		min-height: 60vh;
     }
     
     .search-container {
-height: 56px;
+		height: 56px;
     }
     
     #search-input {
-padding: 0 15px;
+		padding: 0 15px;
     }
     
     #search-button {
-padding: 0 20px;
+		padding: 0 20px;
     }
     
     .title {
-font-size: 2rem;
+		font-size: 2rem;
     }
     
     .example {
-padding: 1rem;
-font-size: 0.8rem;
-padding-left: 1rem;
-padding-right: 1rem;
+		padding: 1rem;
+		font-size: 0.8rem;
+		padding-left: 1rem;
+		padding-right: 1rem;
     }
 }
