@@ -173,8 +173,8 @@
     .hori-selector .right,
     .hori-selector .left {
         position: absolute;
-        width: 0;
-        height: 0;
+		width: 0;
+		height: 0;
         background-color: #6e00aa;
         bottom: 10px;
     }
