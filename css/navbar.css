@@ -2,8 +2,8 @@
 .navbar-logo {
     padding: 5px;
     color: #fff;
-	display: table-cell;
-	vertical-align: middle;
+	display: flex;
+	align-items: center;
 	font-size: 36px;
 	font-family: "Co Headline W01 Regular";
 }
