@@ -3,6 +3,8 @@
     padding: 5px;
     color: #fff;
 	font-size: 36px;
+	display: grid;
+	align - items: center;
 	font-family: "Co Headline W01 Regular";
 }
 
