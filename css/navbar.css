@@ -13,6 +13,10 @@
 	font-family: "Co Headline W01 Regular";
 }
 
+.navbar-brand {
+	margin-right: 0;
+}
+
 .navbar-mainbg {
     background-color: #101044;
     padding: 0px;
