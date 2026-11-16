@@ -23,11 +23,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // 搜索框功能
+    // 搜索框功能：搜索已迁到 EdgeOne Makers（腾讯云边缘出口），
+    // 那边不会被 Docker Hub 按 Cloudflare 出口 IP 限流
     function performSearch() {
         const query = document.getElementById('search-input').value;
         if (query) {
-            window.location.href = '/search?q=' + encodeURIComponent(query);
+            window.location.href = 'https://search.arelay.cn/search?q=' + encodeURIComponent(query);
         }
     }
 
