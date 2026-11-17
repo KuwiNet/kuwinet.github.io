@@ -69,27 +69,18 @@
     position: relative;
 }
 
-/* ===== 高亮块：由 active 菜单项自身绘制 =====
-   旧实现用一个绝对定位的 .hori-selector 去"模拟"高亮，位置靠 JS 量 li 的坐标与宽高。
-   字体未加载完、容器换行、JS 没加载、CDN 返回坏文件，任一因素都会让它错位
-   （表现就是高亮块跑到 logo 上、或压到相邻菜单）。
-   现在改成 active 项 a 上的伪元素画背景，位置完全由布局决定，不可能与文字错位。 */
-#navbarSupportedContent>ul>li>a::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 10px;
-    bottom: 0;
+/* ===== 高亮块：由 active 菜单项自身的背景承担 =====
+   旧实现用一个绝对定位的 .hori-selector 去"模拟"高亮，位置靠 JS 量 li 的坐标与宽高；
+   字体没加载完、容器换行、JS 没加载、CDN 给了坏文件，任一因素都会让它错位。
+   现在直接用 a 元素的 background —— 背景永远在文字下面，位置就是这一项自己，
+   两者本质上不可能错位，也不再需要 JS 参与。
+   顶部用 inset 阴影压出 10px 的 nav 底色，保持原来"高亮块悬浮一点"的观感。 */
+#navbarSupportedContent>ul>li.active>a {
+    background-color: #6e00aa;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
-    background-color: transparent;
+    box-shadow: inset 0 10px 0 #101044;
     transition: background-color 0.35s;
-    pointer-events: none;
-}
-
-#navbarSupportedContent>ul>li.active>a::before {
-    background-color: #6e00aa;
 }
 
 /* 旧的高亮方块整体停用，避免残留元素再画一次 */
@@ -151,13 +142,13 @@
     #navbarSupportedContent ul li a {
         padding: 12px 30px;
     }
-    /* 移动端：左侧药丸形高亮，与原来的视觉保持一致 */
-    #navbarSupportedContent>ul>li>a::before {
-        top: 0;
-        left: 10px;
-        border-radius: 0;
-        border-top-left-radius: 25px;
-        border-bottom-left-radius: 25px;
+    /* 移动端：左侧药丸形高亮，与原来的观感保持一致 */
+    #navbarSupportedContent>ul>li.active>a {
+        box-shadow: none;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        border-radius: 25px 0 0 25px;
+        margin-left: 10px;
     }
     .navbar-content {
         max-width: none; 
