@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function performSearch() {
         const query = document.getElementById('search-input').value;
         if (query) {
-            window.location.href = 'https://search.arelay.cn/search?q=' + encodeURIComponent(query);
+            window.location.href = 'https://search.oproxy.cc/search?q=' + encodeURIComponent(query);
         }
     }
 
