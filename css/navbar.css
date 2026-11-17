@@ -2,19 +2,19 @@
 .navbar-logo {
     padding: 5px;
     color: #fff;
-		display: flex;
-		align-items: flex-end;
+    display: flex;
+    align-items: flex-end;
 }
 
 .navbar-logo .text {
-		display: flex;
-		align-items: center;
-		font-size: 38px;
-		font-family: "Co Headline W01 Regular";
+    display: flex;
+    align-items: center;
+    font-size: 38px;
+    font-family: "Co Headline W01 Regular";
 }
 
 .navbar-brand {
-		margin-right: 0;
+    margin-right: 0;
 }
 
 .navbar-mainbg {
@@ -35,7 +35,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 0 20px;
-		font-family: "Co Headline W01 Regular";
+    font-family: "Co Headline W01 Regular";
 }
 
 #navbarSupportedContent {
@@ -69,24 +69,60 @@
     position: relative;
 }
 
-/* 高亮块由 active 项自身背景承担：位置就是元素本身，不依赖任何 JS 测量。
-   顶部用 10px 渐变压出 nav 底色（等价原来的 margin-top:10px），底部两角另由 li 的伪元素补出。 */
+/* ===== 高亮块：由 active 菜单项自身承担，不依赖 JS 测量 =====
+   旧实现用一个绝对定位的 .hori-selector 去"模拟"高亮，位置靠 JS 量 li 的坐标与宽高；
+   字体没加载完、容器换行、JS 没加载、CDN 给了坏文件，任一因素都会让它错位。
+   现在位置就是这一项自己，本质上不可能错位。
+
+   主体块画在 a 的 ::before 上，并且从 top:10px 才开始落色：
+   顶部这 10px 必须留给 nav 底色（等价于原来的 margin-top:10px），
+   15px 的顶部圆角才有完整的弧线可见。如果把底色写进 a 自己的渐变里，
+   圆角所在的 y=0..15 区域会一并被涂成 nav 色，视觉上就退化成直角矩形。
+
+   a 需要 z-index:0 + isolation:isolate 建立堆叠上下文，
+   ::before 才敢用 z-index:-1 垫到文字下面（否则绝对定位伪元素会盖住 a 里的文字）；
+   同时 -1 只在 a 的上下文内生效，不会被 nav 的背景色盖掉。 */
 #navbarSupportedContent>ul>li.active>a {
     background-color: transparent;
-    background-image: linear-gradient(#101044 0px, #101044 10px, #6e00aa 10px, #6e00aa 100%);
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
+    background-image: none;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    position: relative;
+    z-index: 0;
+    isolation: isolate;
     transition: background-color 0.35s;
 }
 
+#navbarSupportedContent>ul>li.active>a::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: -1;
+    background-color: #6e00aa;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    pointer-events: none;
+}
+
+/* 非选中项的文字必须压在底部两只小脚之上：
+   脚是 30px 方块、外扩 25px，会伸进左右邻居的内边距里，
+   不抬层级就会看到紫色方块盖住邻居文字。 */
+#navbarSupportedContent>ul>li:not(.active)>a {
+    position: relative;
+    z-index: 2;
+}
+
+/* 底部两侧的 30px 小脚：几何照搬原来的 .hori-selector .left/.right
+   —— 30x30 方块、外扩 25px，再用半径 25px 的反圆角把靠内的一大块挖成 nav 底色，
+   剩下的月牙就是标签页底部那条向外扩又收回的弧线。
+   挂在 li 上而不是 a 上：a 内部是 flex 布局，绝对定位基准会落到外层容器，被 overflow 裁掉。 */
 #navbarSupportedContent>ul>li {
     position: relative;
 }
 
-/* 底部两侧 30px 小脚：几何照搬原来的 .hori-selector .left/.right
-   —— 30x30 方块、外扩 25px，再用半径 25px 的反圆角把靠内的一大块挖成 nav 底色，
-   剩下的月牙就是标签页底部那条向外扩又收回的弧线。
-   挂在 li 上而不是 a 上：a 内部是 flex 布局，绝对定位基准会落到外层容器并被 overflow 裁掉。 */
 #navbarSupportedContent>ul>li.active::before,
 #navbarSupportedContent>ul>li.active::after {
     content: '';
@@ -139,7 +175,7 @@
 }
 
 .nav-link .iconfont{
-		font-size: 20px !important;
+    font-size: 20px !important;
 }
 
 @media (min-width: 992px) {
@@ -176,13 +212,16 @@
         border-radius: 25px 0 0 25px;
         margin-left: 10px;
     }
+    #navbarSupportedContent>ul>li.active>a::before {
+        display: none;
+    }
     #navbarSupportedContent>ul>li.active::before,
     #navbarSupportedContent>ul>li.active::after {
         display: none;
     }
     .navbar-content {
-        max-width: none; 
-		padding: 0;
+        max-width: none;
+        padding: 0;
         width: 100%;
     }
     .navbar-brand {
@@ -193,9 +232,9 @@
         margin-left: auto;
     }
 
-	.navbar-toggler .iconfont {
-	    font-size: 20px;
-	}
+    .navbar-toggler .iconfont {
+        font-size: 20px;
+    }
 
     .navbar-collapse {
         flex-direction: column;
