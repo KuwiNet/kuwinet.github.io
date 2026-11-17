@@ -314,3 +314,78 @@ p a {
 p a:hover {
 	text-decoration: underline;
 }
+
+/* ===== 结果区：三段可复制代码块 ===== */
+.result {
+	background: transparent;
+	border: none;
+	padding: 0;
+	min-height: 0;
+	gap: 10px;
+}
+
+.cb {
+	background: rgba(0, 0, 0, 0.22);
+	border: 1px solid rgba(255, 255, 255, 0.18);
+	border-radius: 10px;
+	overflow: hidden;
+}
+
+.cb-head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 6px 10px 6px 14px;
+	background: rgba(255, 255, 255, 0.07);
+}
+
+.cb-title {
+	font-size: 0.82rem;
+	letter-spacing: 0.02em;
+	color: rgba(255, 255, 255, 0.72);
+}
+
+.cb-copy {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 30px;
+	height: 30px;
+	padding: 0;
+	border: none;
+	border-radius: 6px;
+	background: transparent;
+	color: #ffffff;
+	cursor: pointer;
+	transition: background 0.2s ease, color 0.2s ease;
+}
+
+.cb-copy:hover,
+.cb-copy.copied {
+	background: rgba(255, 255, 255, 0.18);
+	color: #ffd98a;
+}
+
+.cb-copy .iconfont {
+	font-size: 19px;
+}
+
+.cb-code {
+	display: block;
+	margin: 0;
+	padding: 12px 14px;
+	font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+	font-size: 0.88rem;
+	line-height: 1.5;
+	color: #f0f6fc;
+	text-align: left;
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+@media (max-width: 640px) {
+	.cb-code {
+		font-size: 0.8rem;
+		padding: 10px;
+	}
+}
