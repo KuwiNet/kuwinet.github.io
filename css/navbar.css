@@ -2,19 +2,19 @@
 .navbar-logo {
     padding: 5px;
     color: #fff;
-	display: flex;
-	align-items: flex-end;
+		display: flex;
+		align-items: flex-end;
 }
 
 .navbar-logo .text {
-	display: flex;
-	align-items: center;
-	font-size: 38px;
-	font-family: "Co Headline W01 Regular";
+		display: flex;
+		align-items: center;
+		font-size: 38px;
+		font-family: "Co Headline W01 Regular";
 }
 
 .navbar-brand {
-	margin-right: 0;
+		margin-right: 0;
 }
 
 .navbar-mainbg {
@@ -35,7 +35,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 0 20px;
-	font-family: "Co Headline W01 Regular";
+		font-family: "Co Headline W01 Regular";
 }
 
 #navbarSupportedContent {
@@ -69,18 +69,44 @@
     position: relative;
 }
 
-/* ===== 高亮块：由 active 菜单项自身的背景承担 =====
-   旧实现用一个绝对定位的 .hori-selector 去"模拟"高亮，位置靠 JS 量 li 的坐标与宽高；
-   字体没加载完、容器换行、JS 没加载、CDN 给了坏文件，任一因素都会让它错位。
-   现在直接用 a 元素的 background —— 背景永远在文字下面，位置就是这一项自己，
-   两者本质上不可能错位，也不再需要 JS 参与。
-   顶部用 inset 阴影压出 10px 的 nav 底色，保持原来"高亮块悬浮一点"的观感。 */
+/* 高亮块由 active 项自身背景承担：位置就是元素本身，不依赖任何 JS 测量。
+   顶部用 10px 渐变压出 nav 底色（等价原来的 margin-top:10px），底部两角另由 li 的伪元素补出。 */
 #navbarSupportedContent>ul>li.active>a {
-    background-color: #6e00aa;
+    background-color: transparent;
+    background-image: linear-gradient(#101044 0px, #101044 10px, #6e00aa 10px, #6e00aa 100%);
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
-    box-shadow: inset 0 10px 0 #101044;
     transition: background-color 0.35s;
+}
+
+#navbarSupportedContent>ul>li {
+    position: relative;
+}
+
+/* 底部两侧 30px 小脚：几何照搬原来的 .hori-selector .left/.right
+   —— 30x30 方块、外扩 25px，再用半径 25px 的反圆角把靠内的一大块挖成 nav 底色，
+   剩下的月牙就是标签页底部那条向外扩又收回的弧线。
+   挂在 li 上而不是 a 上：a 内部是 flex 布局，绝对定位基准会落到外层容器并被 overflow 裁掉。 */
+#navbarSupportedContent>ul>li.active::before,
+#navbarSupportedContent>ul>li.active::after {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    bottom: 0;
+    width: 30px;
+    height: 30px;
+    background-color: #6e00aa;
+    pointer-events: none;
+}
+
+#navbarSupportedContent>ul>li.active::before {
+    left: -25px;
+    background-image: radial-gradient(circle at 0px 5px, #101044 24.5px, #6e00aa 25px);
+}
+
+#navbarSupportedContent>ul>li.active::after {
+    right: -25px;
+    background-image: radial-gradient(circle at 30px 5px, #101044 24.5px, #6e00aa 25px);
 }
 
 /* 旧的高亮方块整体停用，避免残留元素再画一次 */
@@ -113,7 +139,7 @@
 }
 
 .nav-link .iconfont{
-	font-size: 20px !important;
+		font-size: 20px !important;
 }
 
 @media (min-width: 992px) {
@@ -144,11 +170,15 @@
     }
     /* 移动端：左侧药丸形高亮，与原来的观感保持一致 */
     #navbarSupportedContent>ul>li.active>a {
-        box-shadow: none;
+        background-image: linear-gradient(#6e00aa 0px, #6e00aa 100%);
         border-top-left-radius: 0;
         border-top-right-radius: 0;
         border-radius: 25px 0 0 25px;
         margin-left: 10px;
+    }
+    #navbarSupportedContent>ul>li.active::before,
+    #navbarSupportedContent>ul>li.active::after {
+        display: none;
     }
     .navbar-content {
         max-width: none; 
@@ -162,11 +192,11 @@
     .navbar-toggler {
         margin-left: auto;
     }
-	
+
 	.navbar-toggler .iconfont {
 	    font-size: 20px;
 	}
-	
+
     .navbar-collapse {
         flex-direction: column;
         width: 100%;
