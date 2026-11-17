@@ -97,12 +97,14 @@
 	font-size: 20px !important;
 }
 
+/* 默认隐藏：定位算准后由 navbar.js 淡入，避免字体未加载时先闪一个错位的高亮块 */
 .hori-selector {
     display: inline-block;
     position: absolute;
     height: 100%;
     top: 0px;
     left: 0px;
+    opacity: 0;
     transition-duration: 0.6s;
     transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
     background-color: #6e00aa;
