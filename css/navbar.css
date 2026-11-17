@@ -69,10 +69,38 @@
     position: relative;
 }
 
+/* ===== 高亮块：由 active 菜单项自身绘制 =====
+   旧实现用一个绝对定位的 .hori-selector 去"模拟"高亮，位置靠 JS 量 li 的坐标与宽高。
+   字体未加载完、容器换行、JS 没加载、CDN 返回坏文件，任一因素都会让它错位
+   （表现就是高亮块跑到 logo 上、或压到相邻菜单）。
+   现在改成 active 项 a 上的伪元素画背景，位置完全由布局决定，不可能与文字错位。 */
+#navbarSupportedContent>ul>li>a::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 10px;
+    bottom: 0;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    background-color: transparent;
+    transition: background-color 0.35s;
+    pointer-events: none;
+}
+
+#navbarSupportedContent>ul>li.active>a::before {
+    background-color: #6e00aa;
+}
+
+/* 旧的高亮方块整体停用，避免残留元素再画一次 */
+.hori-selector,
+.hori-selector .left,
+.hori-selector .right {
+    display: none !important;
+}
+
 #navbarSupportedContent>ul>li.active>a {
     color: #fff;
-    background-color: transparent;
-    transition: all 0.7s;
 }
 
 #navbarSupportedContent a:not(:only-child):after {
@@ -95,59 +123,6 @@
 
 .nav-link .iconfont{
 	font-size: 20px !important;
-}
-
-/* 默认隐藏：定位算准后由 navbar.js 淡入，避免字体未加载时先闪一个错位的高亮块 */
-.hori-selector {
-    display: inline-block;
-    position: absolute;
-    height: 100%;
-    top: 0px;
-    left: 0px;
-    opacity: 0;
-    transition-duration: 0.6s;
-    transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    background-color: #6e00aa;
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
-    margin-top: 10px;
-}
-
-.hori-selector .right,
-.hori-selector .left {
-    position: absolute;
-    width: 30px;
-    height: 30px;
-    background-color: #6e00aa;
-    bottom: 10px;
-}
-
-.hori-selector .right {
-    right: -25px;
-}
-
-.hori-selector .left {
-    left: -25px;
-}
-
-.hori-selector .right:before,
-.hori-selector .left:before {
-    content: '';
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background-color: #101044;
-}
-
-.hori-selector .right:before {
-    bottom: 0;
-    right: -25px;
-}
-
-.hori-selector .left:before {
-    bottom: 0;
-    left: -25px;
 }
 
 @media (min-width: 992px) {
@@ -176,35 +151,13 @@
     #navbarSupportedContent ul li a {
         padding: 12px 30px;
     }
-    .hori-selector {
-        margin-top: 0px;
-        margin-left: 10px;
+    /* 移动端：左侧药丸形高亮，与原来的视觉保持一致 */
+    #navbarSupportedContent>ul>li>a::before {
+        top: 0;
+        left: 10px;
         border-radius: 0;
         border-top-left-radius: 25px;
         border-bottom-left-radius: 25px;
-    }
-    .hori-selector .right,
-    .hori-selector .left {
-        position: absolute;
-		width: 0;
-		height: 0;
-        background-color: #6e00aa;
-        bottom: 10px;
-    }
-    .hori-selector .left {
-        top: -25px;
-        left: auto;
-    }
-    .hori-selector .right {
-        bottom: -25px;
-    }
-    .hori-selector .left:before {
-        left: -25px;
-        top: -25px;
-    }
-    .hori-selector .right:before {
-        bottom: -25px;
-        left: -25px;
     }
     .navbar-content {
         max-width: none; 
@@ -229,6 +182,7 @@
     }
     .navbar-nav {
         width: 100%;
+        margin-left: 0;
     }
     .navbar-nav li {
         float: none;
