@@ -18,7 +18,7 @@ function toSubmit(e) {
 	const hasDomain = validDomains.some(domain => userInput === domain || userInput.startsWith(domain + '/'));
 
 	// 简写形式。owner 段不允许点，避免 example.com/x 这类外站地址被误认为仓库
-	const shortRe = /^[A-Za-z0-9-]+\/[A-Za-z0-9._-]+\/(archive|releases|blob|raw|tags|tree|info|git-)/i;
+	const shortRe = /^[A-Za-z0-9-]+\/[A-Za-z0-9._-]+\//i;
 	const shortGitRe = /^[A-Za-z0-9-]+\/[A-Za-z0-9._-]+\.git$/i;
 	const shortRepoRe = /^[A-Za-z0-9-]+\/[A-Za-z0-9._-]+$/i;
 	const isShort = shortRe.test(userInput) || shortGitRe.test(userInput) || shortRepoRe.test(userInput);
@@ -35,7 +35,7 @@ function toSubmit(e) {
 		if (shortGitRe.test(target)) {
 			target = 'github.com/' + target;
 		} else if (shortRepoRe.test(target)) {
-			target = 'github.com/' + target + '.git';
+			target = 'github.com/' + target;
 		} else {
 			target = 'github.com/' + target;
 		}
@@ -43,30 +43,41 @@ function toSubmit(e) {
 
 	const kind = classify(target);
 
-	// 仓库地址统一以 .git 结尾，方便直接 clone
-	if (kind === 'git' && !/\.git(\/|$|\?)/i.test(target)) {
-		target = target + '.git';
+	// 仓库地址：第一块给可直接浏览的仓库页面（不带 .git），clone 命令单独带 .git
+	let browseTarget = target;
+	let cloneTarget = target;
+	if (kind === 'git') {
+		if (/\.git(\/|$|\?)/i.test(target)) {
+			browseTarget = target.replace(/\.git(\/|$|\?)/i, '$1');
+			cloneTarget = target;
+		} else {
+			cloneTarget = target + '.git';
+		}
 	}
 
-	const generatedUrl = location.origin + '/' + target;
+	const generatedUrl = location.origin + '/' + browseTarget;
+	const cloneUrl = location.origin + '/' + cloneTarget;
 
 	const codeUrl = document.getElementById('code-url');
 	const codeWget = document.getElementById('code-wget');
 	const codeCurl = document.getElementById('code-curl');
 	const titleWget = document.getElementById('cb-title-wget');
 	const titleCurl = document.getElementById('cb-title-curl');
+	const firstTitle = document.querySelectorAll('#result .cb .cb-title')[0];
 	const note = document.getElementById('cb-note');
 	const blocks = document.querySelectorAll('#result .cb');
 
 	codeUrl.textContent = generatedUrl;
+	if (firstTitle) firstTitle.textContent = '加速链接';
 	for (let i = 0; i < blocks.length; i++) blocks[i].style.display = '';
 	if (note) note.style.display = 'none';
 
 	if (kind === 'git') {
-		codeWget.textContent = 'git clone ' + generatedUrl;
-		codeCurl.textContent = 'git clone --depth 1 ' + generatedUrl;
+		codeWget.textContent = 'git clone ' + cloneUrl;
+		codeCurl.textContent = 'git clone --depth 1 ' + cloneUrl;
 		if (titleWget) titleWget.textContent = 'git clone';
 		if (titleCurl) titleCurl.textContent = '浅克隆（只取最新提交）';
+		if (firstTitle) firstTitle.textContent = '仓库页面（浏览器打开）';
 	} else if (kind === 'download') {
 		codeWget.textContent = 'wget -c ' + generatedUrl;
 		codeCurl.textContent = 'curl -LO ' + generatedUrl;
