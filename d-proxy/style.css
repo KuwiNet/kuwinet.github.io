@@ -199,6 +199,25 @@ pre {
     background-color: rgba(255, 255, 255, 0.18);
     color: #ffd98a;
 }
+
+.notification {
+	position: fixed;
+	top: 20px;
+	left: 50%;
+	transform: translateX(-50%);
+	background: rgba(70, 0, 106, 0.9);
+	color: white;
+	padding: 1rem 2rem;
+	border-radius: 15px;
+	z-index: 1000;
+	opacity: 0;
+	transition: opacity 0.3s ease;
+	pointer-events: none;
+}
+
+.notification.show {
+	opacity: 1;
+}
 		
 p a {
 	color: #FFFFFF;

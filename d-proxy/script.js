@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // 为所有复制按钮添加事件监听器
     const copyButtons = document.querySelectorAll('.copy-button');
     copyButtons.forEach(button => {
         button.addEventListener('click', function() {
@@ -10,12 +9,14 @@ document.addEventListener('DOMContentLoaded', function() {
             navigator.clipboard.writeText(textToCopy).then(() => {
                 const button = this;
                 button.classList.add('copied');
+                showNotification('&#xe63f;', '&nbsp;已复制到剪贴板');
 
                 setTimeout(() => {
                     button.classList.remove('copied');
-                }, 1500);
+                }, 1200);
             }).catch(err => {
                 console.error('复制失败:', err);
+                showNotification('&#xe6aa;', '&nbsp;复制失败，请手动选中');
             });
         });
     });
@@ -44,3 +45,14 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+// 与 GitHub 加速页一致：页面上方居中浮出提示卡片
+function showNotification(iconCode, message) {
+    const el = document.getElementById('notification');
+    if (!el) return;
+    el.innerHTML = '<span class="iconfont">' + iconCode + '</span> ' + message;
+    el.classList.add('show');
+    setTimeout(() => {
+        el.classList.remove('show');
+    }, 3000);
+}
