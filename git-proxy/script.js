@@ -85,6 +85,8 @@ function toSubmit(e) {
 		if (titleCurl) titleCurl.textContent = 'curl 下载';
 	} else {
 		// 网页与 API 不是可下载文件，不输出 wget / curl，只保留链接本身
+		codeWget.textContent = '';
+		codeCurl.textContent = '';
 		for (let i = 1; i < blocks.length; i++) blocks[i].style.display = 'none';
 		if (note) {
 			note.textContent = kind === 'api'
