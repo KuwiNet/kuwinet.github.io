@@ -37,13 +37,6 @@
     font-display:swap;
 }
 
-@font-face {
-	font-family: 'iconfont';
-	src: url('https://cdn.jsdelivr.net/gh/KuwiNet/kuwinet.github.io@main/webfonts/iconfont.woff2?t=1745051767322') format('woff2'),
-	     url('https://cdn.jsdelivr.net/gh/KuwiNet/kuwinet.github.io@main/webfonts/iconfont.woff?t=1745051767322') format('woff'),
-	     url('https://cdn.jsdelivr.net/gh/KuwiNet/kuwinet.github.io@main/webfonts/iconfont.ttf?t=1745051767322') format('truetype');
-}
-
 .iconfont {
 	font-family: "iconfont" !important;
 	font-size: 16px;
@@ -60,3 +53,4 @@ body p:last-of-type {
 body p:last-of-type:hover {
     color: white !important;
 }
+
