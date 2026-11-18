@@ -9,14 +9,11 @@ document.addEventListener('DOMContentLoaded', function() {
             
             navigator.clipboard.writeText(textToCopy).then(() => {
                 const button = this;
-                const originalIcon = button.querySelector('.copy-icon').outerHTML;
-                button.innerHTML = '已复制！';
-                button.classList.add('success');
-                
+                button.classList.add('copied');
+
                 setTimeout(() => {
-                    button.innerHTML = originalIcon;
-                    button.classList.remove('success');
-                }, 2000);
+                    button.classList.remove('copied');
+                }, 1500);
             }).catch(err => {
                 console.error('复制失败:', err);
             });

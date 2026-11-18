@@ -195,9 +195,9 @@ pre {
     background-color: rgba(255, 255, 255, 0.3);
 }
 
-.copy-button.success {
-    background-color: rgba(76, 175, 80, 0.3);
-    color: white;
+.copy-button.copied {
+    background-color: rgba(255, 255, 255, 0.18);
+    color: #ffd98a;
 }
 		
 p a {
