@@ -209,7 +209,7 @@ pre {
 	color: white;
 	padding: 1rem 2rem;
 	border-radius: 15px;
-	z-index: 1000;
+	z-index: 99999;
 	opacity: 0;
 	transition: opacity 0.3s ease;
 	pointer-events: none;
