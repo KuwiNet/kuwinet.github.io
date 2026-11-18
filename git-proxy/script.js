@@ -22,7 +22,9 @@ function toSubmit(e) {
 
 	// 简写：owner/repo/archive/... 等，Worker 会自动补 github.com
 	const shortRe = /^[^/?#\s]+\/[^/?#\s]+\/(archive|releases|blob|raw|tags|tree|info|git-)/i;
-	const isShort = shortRe.test(userInput);
+	// 简写：owner/repo.git，用于 git clone
+	const shortGitRe = /^[^/?#\s]+\/[^/?#\s]+\.git\/?$/i;
+	const isShort = shortRe.test(userInput) || shortGitRe.test(userInput);
 
 	if (!hasDomain && !isShort) {
 		showNotification('&#xe6aa;', '&nbsp;请输入 Github 链接');
@@ -33,10 +35,28 @@ function toSubmit(e) {
 	const baseUrl = location.origin + '/';
 	const generatedUrl = baseUrl + userInput;
 
-	// 一次性输出三个代码块：加速链接 / wget / curl
-	document.getElementById('code-url').textContent = generatedUrl;
-	document.getElementById('code-wget').textContent = 'wget ' + generatedUrl;
-	document.getElementById('code-curl').textContent = 'curl -LO ' + generatedUrl;
+	// 以 .git 结尾的是仓库地址，走 clone 场景；其余走下载场景
+	const isGit = /\.git(\/|$|\?)/i.test(userInput);
+	const codeUrl = document.getElementById('code-url');
+	const codeWget = document.getElementById('code-wget');
+	const codeCurl = document.getElementById('code-curl');
+	const titleWget = document.getElementById('cb-title-wget');
+	const titleCurl = document.getElementById('cb-title-curl');
+
+	codeUrl.textContent = generatedUrl;
+
+	if (isGit) {
+		codeWget.textContent = 'git clone ' + generatedUrl;
+		codeCurl.textContent = 'git clone --depth 1 ' + generatedUrl;
+		if (titleWget) titleWget.textContent = 'git clone';
+		if (titleCurl) titleCurl.textContent = '浅克隆（只取最新提交）';
+	} else {
+		codeWget.textContent = 'wget -c ' + generatedUrl;
+		codeCurl.textContent = 'curl -LO ' + generatedUrl;
+		if (titleWget) titleWget.textContent = 'wget 下载（可续传）';
+		if (titleCurl) titleCurl.textContent = 'curl 下载';
+	}
+
 	document.getElementById('result').style.display = 'block';
 
 	// 清空输入框
