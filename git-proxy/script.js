@@ -13,7 +13,12 @@ function toSubmit(e) {
 		'objects.githubusercontent.com',
 		'release-assets.githubusercontent.com',
 		'media.githubusercontent.com',
-		'github-cloud.githubusercontent.com'
+		'github-cloud.githubusercontent.com',
+		'github.githubassets.com',
+		'avatars.githubusercontent.com',
+		'user-images.githubusercontent.com',
+		'private-user-images.githubusercontent.com',
+		'camo.githubusercontent.com'
 	];
 	const hasDomain = validDomains.some(domain => userInput === domain || userInput.startsWith(domain + '/'));
 
@@ -105,6 +110,7 @@ function toSubmit(e) {
 // 判定链接类型：git 仓库 / 可下载文件 / API / 普通网页
 function classify(u) {
 	if (/^api\.github\.com\//i.test(u)) return 'api';
+	if (/^(github\.githubassets\.com|avatars\.githubusercontent\.com|user-images\.githubusercontent\.com|private-user-images\.githubusercontent\.com|camo\.githubusercontent\.com)\//i.test(u)) return 'download';
 	if (/\.git(\/|$|\?)/i.test(u)) return 'git';
 	if (/^github\.com\/[^/?#\s]+\/[^/?#\s]+$/i.test(u)) return 'git';
 	if (/(releases\/download|releases\/assets|\/archive\/|\/blob\/|\/raw\/|raw\.githubusercontent\.com\/|gist\.githubusercontent\.com\/|codeload\.github\.com\/|objects\.githubusercontent\.com\/|release-assets\.githubusercontent\.com\/|media\.githubusercontent\.com\/|github-cloud\.githubusercontent\.com\/)/i.test(u)) return 'download';
