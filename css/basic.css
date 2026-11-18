@@ -37,6 +37,13 @@
     font-display:swap;
 }
 
+@font-face {
+  font-family: 'iconfont';  /* Project id 4892763 */
+  src: url('//at.alicdn.com/t/c/font_4892763_skkvi1iofje.woff2?t=1794995168069') format('woff2'),
+       url('//at.alicdn.com/t/c/font_4892763_skkvi1iofje.woff?t=1794995168069') format('woff'),
+       url('//at.alicdn.com/t/c/font_4892763_skkvi1iofje.ttf?t=1794995168069') format('truetype');
+}
+
 .iconfont {
 	font-family: "iconfont" !important;
 	font-size: 16px;
