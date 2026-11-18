@@ -6,11 +6,25 @@ function toSubmit(e) {
 	// 去掉协议头
 	userInput = userInput.replace(/^https?:\/\//i, '');
 
-	// 验证域名
-	const validDomains = ['github.com', 'raw.githubusercontent.com', 'gist.githubusercontent.com', 'api.github.com'];
-	const isValidDomain = validDomains.some(domain => userInput.startsWith(domain));
+	// 支持的域名（与 Worker 的 RULES 对齐）
+	const validDomains = [
+		'github.com',
+		'raw.githubusercontent.com',
+		'gist.githubusercontent.com',
+		'api.github.com',
+		'codeload.github.com',
+		'objects.githubusercontent.com',
+		'release-assets.githubusercontent.com',
+		'media.githubusercontent.com',
+		'github-cloud.githubusercontent.com'
+	];
+	const hasDomain = validDomains.some(domain => userInput.startsWith(domain));
 
-	if (!isValidDomain) {
+	// 简写：owner/repo/archive/... 等，Worker 会自动补 github.com
+	const shortRe = /^[^/?#\s]+\/[^/?#\s]+\/(archive|releases|blob|raw|tags|tree|info|git-)/i;
+	const isShort = shortRe.test(userInput);
+
+	if (!hasDomain && !isShort) {
 		showNotification('&#xe6aa;', '&nbsp;请输入 Github 链接');
 		input.value = '';
 		return;
