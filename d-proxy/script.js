@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
             navigator.clipboard.writeText(textToCopy).then(() => {
                 const button = this;
                 button.classList.add('copied');
-                showNotification('&#xe608;', '&nbsp;已复制到剪贴板');
+                showNotification('&#xe63f;', '&nbsp;已复制到剪贴板');
 
                 setTimeout(() => {
                     button.classList.remove('copied');
